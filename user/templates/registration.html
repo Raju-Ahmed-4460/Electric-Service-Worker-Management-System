@@ -1,0 +1,27 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+</head>
+<body>
+  <div  class ="flex justify-center min-h-screen">
+
+    <form  method="POST" action="" >
+    {% csrf_token %}
+
+    {{form.as_p}}
+
+    <button type='submit' class="px-2 py-1 rounded-md bg-green-600">Submit</button>
+  </form>
+
+  </div>
+
+  
+    
+</body>
+</html>
