@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group, Permission
 
 User=get_user_model()
 
@@ -36,5 +37,23 @@ class RegistrationForm(forms.ModelForm):
 class login_form(forms.Form):
     username=forms.CharField(max_length=100)
     password=forms.CharField(widget=forms.PasswordInput)
+
+
+class Create_group_form(forms.ModelForm):
+    permission=forms.ModelMultipleChoiceField(
+        queryset=Permission.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False,
+        label="select Your choice"
+    )
     
+    class Meta:
+        model=Group
+        fields=["name","permission"]
+
+class Assign_role_form(forms.Form):
+    role=forms.ModelChoiceField(
+        queryset=Group.objects.all(),
+        label="Assign a Group"
+    )
 

@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect
-from user.forms import RegistrationForm,login_form
+from user.forms import RegistrationForm,login_form,Assign_role_form,Create_group_form
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate, login,logout
 from django.http import HttpResponse
+from django.contrib.auth.models import Group
+from django.contrib import messages
+
 
 
 User=get_user_model()
@@ -68,6 +71,48 @@ def user_logout(request):
     return redirect('login')
 
 def home(request):
-    return render(request,"home.html")
+    user=User.objects.all()
+    return render(request,"home.html",{'user':user})
+
+
+def assign_role(request,user_id):
+    form=Assign_role_form()
+    user=User.objects.get(id=user_id)
+
+    if request.method=="POST":
+     
+       form=Assign_role_form(request.POST)
+       if form.is_valid():
+        role=form.cleaned_data.get('role')
+        user.groups.clear()
+        user.groups.add(role)
+        return HttpResponse("group added successfully")
+    
+
+    return render(request,"assignrole.html",{'form':form})
+
+
+def create_group(request):
+    form=Create_group_form()
+
+    if request.method=="POST":
+        form=Create_group_form(request.POST)
+
+        if form.is_valid():
+            form.save()
+
+            return HttpResponse("group create successfully")
+    
+    return render(request,"creategroup.html",{'form':form})
+
+
+
+def grouplist(request):
+     groups=Group.objects.prefetch_related('permissions').all()
+     return render(request,"grouplist.html",{'groups':groups})
+ 
+        
+
+
 
 

@@ -1,3 +1,4 @@
+
 {% load static %}
 
 <!DOCTYPE html>
@@ -10,15 +11,11 @@
 </head>
 <body>
 
-    <h1 class="bg-orange-500">This is home</h1>
-
-    <a href="{% url "logout" %}">logOut</a>
-
-    {% for us in user %}
-    <a href="{% url "assigngroup" us.id %}">Assign Role</a>
-    {% endfor %}
-
-    
-    
+    <form action="" method="POST" >
+        {% csrf_token %}
+        {{form.as_p}}
+        <button>Submit</button>
+        
+    </form>
 </body>
 </html>
