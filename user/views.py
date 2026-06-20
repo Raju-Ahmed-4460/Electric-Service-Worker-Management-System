@@ -110,6 +110,11 @@ def create_group(request):
 def grouplist(request):
      groups=Group.objects.prefetch_related('permissions').all()
      return render(request,"grouplist.html",{'groups':groups})
+
+
+def userlist(request):
+    user=User.objects.all()
+    return render(request,"userlist.html", {'user':user})
  
         
 

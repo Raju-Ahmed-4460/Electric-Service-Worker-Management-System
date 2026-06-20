@@ -1,0 +1,43 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group List</title>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+</head>
+
+<body class="bg-slate-500">
+
+    <div class="bg-slate-100 mt-16 mx-32 p-6 rounded-lg shadow-lg">
+
+        <h1 class="text-3xl font-bold text-center mb-6">
+            Group List
+        </h1>
+
+        <div class="space-y-3">
+
+            {% for group in groups %}
+
+            <div class="bg-white p-4 rounded-md shadow border hover:bg-slate-50">
+                <p class="text-center text-lg font-medium">
+                    {{ group.name }}
+                </p>
+            </div>
+
+            {% empty %}
+
+            <p class="text-center text-red-500">
+                No Groups Found
+            </p>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -5,20 +5,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Home</title>
     <link rel="stylesheet" href="{% static 'css/output.css' %}">
 </head>
-<body>
 
-    <h1 class="bg-orange-500">This is home</h1>
+<body class="bg-gray-100 min-h-screen">
 
-    <a href="{% url "logout" %}">logOut</a>
+    <!-- Header -->
+    <div class="bg-orange-500 text-white p-4 text-center text-2xl font-bold">
+        pThis is Home
+    </div>
 
-    {% for us in user %}
-    <a href="{% url "assigngroup" us.id %}">Assign Role</a>
-    {% endfor %}
+    <!-- Navbar -->
+    <div class="flex justify-end gap-4 p-4 bg-white shadow">
+        <a class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+           href="{% url 'logout' %}">
+            Logout
+        </a>
 
-    
-    
+        <a class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+           href="{% url 'creategroup' %}">
+            CreateGroup
+        </a>
+    </div>
+
+    <!-- User List -->
+    <div class="max-w-4xl mx-auto mt-10 bg-white shadow rounded-lg">
+
+        <div class="p-4 border-b font-bold text-lg">
+            Users
+        </div>
+
+        {% for us in users %}
+        <div class="flex justify-between items-center p-4 border-b hover:bg-gray-50">
+
+            <div>
+                <p class="font-medium text-gray-800">{{ us.username }}</p>
+                <p class="text-sm text-gray-500">{{ us.email }}</p>
+            </div>
+
+            <a href="{% url 'assigngroup' us.id %}"
+               class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
+                Assign Role
+            </a>
+
+        </div>
+        {% empty %}
+        <p class="p-4 text-center text-gray-500">
+            No users found
+        </p>
+        {% endfor %}
+
+    </div>
+
 </body>
 </html>
