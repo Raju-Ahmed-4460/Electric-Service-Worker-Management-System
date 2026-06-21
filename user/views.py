@@ -115,6 +115,9 @@ def grouplist(request):
 def userlist(request):
     user=User.objects.all()
     return render(request,"userlist.html", {'user':user})
+
+def admindashboard(request):
+    return render(request,"admindashboard.html")
  
         
 
