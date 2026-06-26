@@ -1,15 +1,5 @@
-{% load static %}
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Group List</title>
-    <link rel="stylesheet" href="{% static 'css/output.css' %}">
-</head>
-
-<body class="bg-slate-500">
+{% extends "admindashboard.html" %}
+{% block content %}
 
     <div class="bg-slate-100 mt-16 mx-32 p-6 rounded-lg shadow-lg">
 
@@ -39,5 +29,4 @@
 
     </div>
 
-</body>
-</html>
+{% endblock content %}

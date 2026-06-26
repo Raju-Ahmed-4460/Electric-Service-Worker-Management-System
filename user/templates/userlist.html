@@ -1,62 +1,58 @@
-{% load static %}
+{% extends "admindashboard.html" %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User List</title>
-    <link rel="stylesheet" href="{% static 'css/output.css' %}">
-</head>
-<body class="bg-gray-100 min-h-screen">
+{% block content %}
 
-    <div class="max-w-4xl mx-auto mt-10">
-        
-        <h1 class="text-3xl font-bold text-center mb-8">
-            User List
-        </h1>
+<div class="bg-slate-100 mt-16 mx-32 p-6 rounded-lg shadow-lg">
 
-        <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+    <h1 class="text-3xl font-bold text-center mb-6">
+        User List
+    </h1>
 
-            <div class="grid grid-cols-4 bg-gray-800 text-white font-semibold p-4">
-                <p>Username</p>
-                <p>Email</p>
-                <p>Group Name</p>
-                <p>Assign Group</p>
-                
-            </div>
+    <div class="bg-white rounded-lg shadow overflow-hidden">
 
-            {% for us in user %}
-            <div class="grid grid-cols-4 p-4 border-b hover:bg-gray-50 transition">
-                <p class="font-medium text-gray-800">
-                    {{ us.username }}
-                </p>
+        <!-- Header -->
+        <div class="grid grid-cols-4 bg-gray-800 text-white font-semibold p-4">
+            <p>Username</p>
+            <p>Email</p>
+            <p>Group Name</p>
+            <p>Assign Group</p>
+        </div>
 
-                <p class="text-gray-600">
-                    {{ us.email }}
-                </p>
-                 <p class="text-gray-600">
-                  {% for group in us.groups.all %}
-                    {{ group.name }} 
-                   {% empty %}
-                     No Group
-                    {% endfor %}
-                    </p>
+        {% for us in user %}
 
-                    <a href="{% url 'assigngroup' us.id %}"
-                   class="bg-green-500 text-white px-3 py-1 rounded-md text-center hover:bg-green-600 transition block">
+        <div class="grid grid-cols-4 items-center p-4 border-b hover:bg-gray-100 transition">
+
+            <p>{{ us.username }}</p>
+
+            <p>{{ us.email }}</p>
+
+            <p>
+                {% for group in us.groups.all %}
+                    {{ group.name }}
+                {% empty %}
+                    No Group
+                {% endfor %}
+            </p>
+
+            <div>
+                <a href="{% url 'assigngroup' us.id %}"
+                   class="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-md">
                     Change Role
-                       </a>
+                </a>
             </div>
-            {% empty %}
-            <div class="p-4 text-center text-gray-500">
-                No users found.
-            </div>
-            {% endfor %}
 
         </div>
 
+        {% empty %}
+
+        <div class="p-4 text-center text-red-500">
+            No Users Found
+        </div>
+
+        {% endfor %}
+
     </div>
 
-</body>
-</html>
+</div>
+
+{% endblock content %}
