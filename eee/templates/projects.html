@@ -1,0 +1,102 @@
+
+
+{% extends "base.html" %}
+
+{% block title %}Projects - BuildSync{% endblock %}
+
+{% block content %}
+
+<section class="py-12 px-10">
+
+```
+<div class="max-w-6xl mx-auto">
+
+    <h1 class="text-3xl font-bold text-gray-800 mb-8">
+        My Projects
+    </h1>
+
+
+    <div class="bg-white rounded-2xl shadow-md overflow-hidden">
+
+        <div class="overflow-x-auto">
+
+            <table class="w-full text-left">
+
+                <thead class="bg-orange-100">
+
+                    <tr>
+
+                        <th class="px-6 py-4">
+                            Project
+                        </th>
+
+                        <th class="px-6 py-4">
+                            Location
+                        </th>
+
+                        <th class="px-6 py-4">
+                            Role
+                        </th>
+
+                        <th class="px-6 py-4">
+                            Status
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for project in projects %}
+
+                    <tr class="border-b">
+
+                        <td class="px-6 py-4 font-semibold">
+                            {{ project.name }}
+                        </td>
+
+                        <td class="px-6 py-4">
+                            {{ project.location }}
+                        </td>
+
+                        <td class="px-6 py-4">
+                            {{ project.role }}
+                        </td>
+
+                        <td class="px-6 py-4">
+                            {{ project.status }}
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td colspan="4"
+                            class="px-6 py-8 text-center text-gray-500">
+
+                            No projects assigned.
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+```
+
+</section>
+
+{% endblock content %}

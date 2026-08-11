@@ -1,71 +1,556 @@
-
-{% extends "admindashboard.html" %}
-{% block content %}
 {% load static %}
 
+<!DOCTYPE html>
 
-<!-- HERO SECTION  -->
-<section class="relative h-[90vh] overflow-hidden">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Background Image -->
-    <img src="{% static 'image/b1.jpeg' %}"
-         class="absolute inset-0 w-full h-full object-cover blur-sm scale-105">
+```
+<title>User Dashboard - BuildSync</title>
 
-    <!-- Dark Overlay -->
-    <div class="absolute inset-0 bg-black/50"></div>
+<link rel="stylesheet" href="{% static 'css/output.css' %}">
 
-    <!-- Content -->
-    <div class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white">
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+```
 
-        <h1 class="text-6xl font-bold mb-4">
-            Welcome to BuildSync
-        </h1>
+</head>
 
-        <p class="text-2xl mb-6">
-            Manage Construction Projects Efficiently
-        </p>
+<body class="bg-slate-100">
 
-        <button class="bg-orange-500 hover:bg-orange-600 px-6 py-3 rounded-lg font-semibold transition">
-            Get Started
+<!-- NAVBAR -->
+
+<nav class="fixed top-0 left-0 w-full z-50 bg-orange-300 shadow-md">
+
+```
+<div class="flex justify-between items-center p-4">
+
+    <!-- LEFT -->
+    <div class="flex gap-4 items-center ml-32">
+
+        <img src="{% static 'image/logo-circle.webp' %}"
+             alt="BuildSync"
+             class="h-10 w-10 rounded-full">
+
+        <a href="{% url 'home' %}"
+           class="px-4 py-2 rounded-full hover:bg-orange-500 hover:text-white transition">
+            Home
+        </a>
+
+    </div>
+
+
+    <!-- RIGHT -->
+    <div class="flex gap-5 items-center mr-32">
+
+        <a href="#"
+           class="px-3 py-2 rounded-full hover:bg-orange-500 hover:text-white transition">
+            <i class="fa-solid fa-bell text-xl"></i>
+        </a>
+
+        <a href="#tasks"
+           class="px-4 py-2 rounded-full hover:bg-orange-500 hover:text-white transition">
+            My Tasks
+        </a>
+
+        <a href="#projects"
+           class="px-4 py-2 rounded-full hover:bg-orange-500 hover:text-white transition">
+            Projects
+        </a>
+
+        <a href="{% url 'logout' %}"
+           class="px-4 py-2 rounded-full bg-red-500 text-white hover:bg-red-600 transition">
+            Logout
+        </a>
+
+    </div>
+
+</div>
+```
+
+</nav>
+
+<!-- HERO / WELCOME SECTION -->
+
+<section class="relative h-[55vh] overflow-hidden">
+
+```
+<img src="{% static 'image/b1.jpeg' %}"
+     class="absolute inset-0 w-full h-full object-cover blur-sm scale-105">
+
+<div class="absolute inset-0 bg-black/60"></div>
+
+<div class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white">
+
+    <p class="text-orange-400 text-lg font-semibold mb-2">
+        BUILDSYNC
+    </p>
+
+    <h1 class="text-5xl font-bold mb-4">
+        Welcome Back!
+    </h1>
+
+    <p class="text-xl text-gray-200">
+        Manage your construction work and projects easily.
+    </p>
+
+</div>
+```
+
+</section>
+
+<!-- DASHBOARD SUMMARY -->
+
+<section class="py-12 px-10">
+
+```
+<div class="max-w-6xl mx-auto">
+
+    <h2 class="text-3xl font-bold text-gray-800 mb-8">
+        My Dashboard
+    </h2>
+
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+
+        <!-- ACTIVE TASKS -->
+
+        <div class="bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition">
+
+            <div class="flex justify-between items-center">
+
+                <div>
+                    <p class="text-gray-500">
+                        Active Tasks
+                    </p>
+
+                    <h3 class="text-3xl font-bold text-orange-500 mt-2">
+                        5
+                    </h3>
+                </div>
+
+                <div class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center">
+                    <i class="fa-solid fa-list-check text-orange-500 text-xl"></i>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- COMPLETED TASKS -->
+
+        <div class="bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition">
+
+            <div class="flex justify-between items-center">
+
+                <div>
+                    <p class="text-gray-500">
+                        Completed
+                    </p>
+
+                    <h3 class="text-3xl font-bold text-green-500 mt-2">
+                        12
+                    </h3>
+                </div>
+
+                <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
+                    <i class="fa-solid fa-circle-check text-green-500 text-xl"></i>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PROJECTS -->
+
+        <div class="bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition">
+
+            <div class="flex justify-between items-center">
+
+                <div>
+                    <p class="text-gray-500">
+                        My Projects
+                    </p>
+
+                    <h3 class="text-3xl font-bold text-blue-500 mt-2">
+                        3
+                    </h3>
+                </div>
+
+                <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
+                    <i class="fa-solid fa-building text-blue-500 text-xl"></i>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PENDING -->
+
+        <div class="bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition">
+
+            <div class="flex justify-between items-center">
+
+                <div>
+                    <p class="text-gray-500">
+                        Pending Tasks
+                    </p>
+
+                    <h3 class="text-3xl font-bold text-red-500 mt-2">
+                        2
+                    </h3>
+                </div>
+
+                <div class="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
+                    <i class="fa-solid fa-clock text-red-500 text-xl"></i>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+```
+
+</section>
+
+<!-- MY TASKS -->
+
+<section id="tasks" class="py-12 bg-slate-200 px-10">
+
+```
+<div class="max-w-6xl mx-auto">
+
+    <div class="flex justify-between items-center mb-8">
+
+        <h2 class="text-3xl font-bold text-gray-800">
+            My Tasks
+        </h2>
+
+        <button class="bg-orange-500 text-white px-5 py-2 rounded-lg hover:bg-orange-600 transition">
+            View All
         </button>
 
     </div>
 
-</section>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
 
+        <!-- TASK 1 -->
+
+        <div class="bg-white rounded-2xl shadow-md p-6">
+
+            <div class="flex justify-between">
+
+                <h3 class="text-xl font-semibold">
+                    Pipe Installation
+                </h3>
+
+                <span class="text-sm bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full">
+                    In Progress
+                </span>
+
+            </div>
+
+            <p class="text-gray-500 mt-3">
+                Install water pipes in the second floor.
+            </p>
+
+            <div class="mt-5">
+
+                <p class="text-sm text-gray-500">
+                    Location
+                </p>
+
+                <p class="font-semibold">
+                    Dhaka Project
+                </p>
+
+            </div>
+
+        </div>
 
 
-<!-- Our Services Section -->
-<section class="py-16 bg-slate-100">
+        <!-- TASK 2 -->
 
-    <div class="text-center mb-10">
-        <h2 class="text-4xl font-bold text-gray-800">
-            Our Services
-        </h2>
-        <p class="text-gray-500 mt-2">
-            What we provide for your construction needs
-        </p>
+        <div class="bg-white rounded-2xl shadow-md p-6">
+
+            <div class="flex justify-between">
+
+                <h3 class="text-xl font-semibold">
+                    Electrical Wiring
+                </h3>
+
+                <span class="text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full">
+                    Assigned
+                </span>
+
+            </div>
+
+            <p class="text-gray-500 mt-3">
+                Complete electrical wiring of room 204.
+            </p>
+
+            <div class="mt-5">
+
+                <p class="text-sm text-gray-500">
+                    Location
+                </p>
+
+                <p class="font-semibold">
+                    Mirpur Project
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- TASK 3 -->
+
+        <div class="bg-white rounded-2xl shadow-md p-6">
+
+            <div class="flex justify-between">
+
+                <h3 class="text-xl font-semibold">
+                    Switch Installation
+                </h3>
+
+                <span class="text-sm bg-green-100 text-green-700 px-3 py-1 rounded-full">
+                    Completed
+                </span>
+
+            </div>
+
+            <p class="text-gray-500 mt-3">
+                Install switches and electrical sockets.
+            </p>
+
+            <div class="mt-5">
+
+                <p class="text-sm text-gray-500">
+                    Location
+                </p>
+
+                <p class="font-semibold">
+                    Uttara Project
+                </p>
+
+            </div>
+
+        </div>
+
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 px-10">
+</div>
+```
 
-        <div class="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-xl transition">
-            <h3 class="text-xl font-semibold mb-2">Project Management</h3>
-            <p class="text-gray-600">Manage all construction projects efficiently.</p>
-        </div>
+</section>
 
-        <div class="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-xl transition">
-            <h3 class="text-xl font-semibold mb-2">Worker Allocation</h3>
-            <p class="text-gray-600">Assign workers and helpers easily.</p>
-        </div>
+<!-- ACTIVE PROJECTS -->
 
-        <div class="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-xl transition">
-            <h3 class="text-xl font-semibold mb-2">Real-time Updates</h3>
-            <p class="text-gray-600">Get live updates of ongoing work.</p>
+<section id="projects" class="py-12 px-10">
+
+```
+<div class="max-w-6xl mx-auto">
+
+    <h2 class="text-3xl font-bold text-gray-800 mb-8">
+        Active Projects
+    </h2>
+
+
+    <div class="bg-white rounded-2xl shadow-md overflow-hidden">
+
+        <div class="overflow-x-auto">
+
+            <table class="w-full text-left">
+
+                <thead class="bg-orange-100">
+
+                    <tr>
+
+                        <th class="px-6 py-4">
+                            Project
+                        </th>
+
+                        <th class="px-6 py-4">
+                            Location
+                        </th>
+
+                        <th class="px-6 py-4">
+                            Your Role
+                        </th>
+
+                        <th class="px-6 py-4">
+                            Status
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    <tr class="border-b">
+
+                        <td class="px-6 py-4 font-semibold">
+                            Residential Building
+                        </td>
+
+                        <td class="px-6 py-4">
+                            Dhaka
+                        </td>
+
+                        <td class="px-6 py-4">
+                            Electrician
+                        </td>
+
+                        <td class="px-6 py-4">
+
+                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
+                                Running
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr class="border-b">
+
+                        <td class="px-6 py-4 font-semibold">
+                            Office Renovation
+                        </td>
+
+                        <td class="px-6 py-4">
+                            Mirpur
+                        </td>
+
+                        <td class="px-6 py-4">
+                            Pipe Fitter
+                        </td>
+
+                        <td class="px-6 py-4">
+
+                            <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm">
+                                In Progress
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+
+                </tbody>
+
+            </table>
+
         </div>
 
     </div>
 
+</div>
+```
+
 </section>
-{% endblock content %}
+
+<!-- RECENT ACTIVITY -->
+
+<section class="py-12 bg-slate-200 px-10">
+
+```
+<div class="max-w-6xl mx-auto">
+
+    <h2 class="text-3xl font-bold text-gray-800 mb-8">
+        Recent Activity
+    </h2>
+
+
+    <div class="bg-white rounded-2xl shadow-md p-6">
+
+
+        <div class="flex gap-4 items-start border-b pb-5 mb-5">
+
+            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                <i class="fa-solid fa-check text-green-500"></i>
+            </div>
+
+            <div>
+
+                <p class="font-semibold">
+                    Task Completed
+                </p>
+
+                <p class="text-gray-500 text-sm">
+                    You completed the switch installation task.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="flex gap-4 items-start border-b pb-5 mb-5">
+
+            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                <i class="fa-solid fa-briefcase text-blue-500"></i>
+            </div>
+
+            <div>
+
+                <p class="font-semibold">
+                    New Task Assigned
+                </p>
+
+                <p class="text-gray-500 text-sm">
+                    A new electrical wiring task was assigned to you.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="flex gap-4 items-start">
+
+            <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
+                <i class="fa-solid fa-location-dot text-orange-500"></i>
+            </div>
+
+            <div>
+
+                <p class="font-semibold">
+                    Project Location Updated
+                </p>
+
+                <p class="text-gray-500 text-sm">
+                    The location of your active project was updated.
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+```
+
+</section>
+
+{% include "footer.html" %}
+
+</body>
+</html>

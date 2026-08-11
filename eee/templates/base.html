@@ -1,70 +1,102 @@
 {% load static %}
+
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="{% static 'css/output.css' %}">
-    <link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+```
+<title>{% block title %}BuildSync{% endblock %}</title>
+
+<link rel="stylesheet" href="{% static 'css/output.css' %}">
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+```
+
 </head>
 
-<body class="bg-slate-300">
+<body class="bg-slate-100">
 
+```
 <!-- NAVBAR -->
-<nav class="fixed top-0 left-0 w-full z-50 bg-orange-300">
+
+<nav class="fixed top-0 left-0 w-full z-50 bg-orange-300 shadow-md">
+
     <div class="flex justify-between items-center p-4">
 
-        <!-- Left -->
-        <div class="flex gap-4 items-center ml-32">
-            <img src="{% static 'image/logo-circle.webp' %}"
-     alt=""
-     class="h-10 w-10 cursor-pointer rounded-full hover:scale-105 transition">
+        <!-- LEFT -->
 
-            <a href="{% url 'home' %}" class="cursor-pointer hover:bg-orange-500 hover:text-white px-3 py-1 rounded-full transition">
-    Home
-</a>
-                
-        
+        <div class="flex gap-4 items-center ml-32">
+
+            <img src="{% static 'image/logo-circle.webp' %}"
+                 alt="BuildSync"
+                 class="h-10 w-10 rounded-full">
+
+            <a href="{% url 'userdashboard' %}"
+               class="px-4 py-2 rounded-full hover:bg-orange-500 hover:text-white transition">
+                Home
+            </a>
+
         </div>
 
-        <!-- Right -->
-         
-        <div class="flex gap-5 items-center mr-32">
 
-            <a href="#"
-   class="cursor-pointer hover:bg-orange-500 hover:text-white px-3 py-2 rounded-full transition">
-    <i class="fa-solid fa-bell text-xl"></i>
-</a>
+        <!-- RIGHT -->
 
-            <a href="{% url "creategroup" %}" class="cursor-pointer hover:bg-orange-500 hover:text-white px-3 py-1 rounded-full transition">
-                Explore
-                </a>
-        
+        <div class="flex gap-4 items-center mr-32">
 
-            <a href="{% url "userlist" %}"  class="cursor-pointer hover:bg-orange-500 hover:text-white px-3 py-1 rounded-full transition">
-                Login
-                </a>
-            
-
-            
-
-            <a href="{% url "grouplist" %}" class="cursor-pointer hover:bg-orange-500 hover:text-white px-3 py-1 rounded-full transition">
-                Sign-Up
+            <a href="{% url 'mytasks' %}"
+               class="px-4 py-2 rounded-full hover:bg-orange-500 hover:text-white transition">
+                My Tasks
             </a>
+
+
+            <a href="{% url 'projects' %}"
+               class="px-4 py-2 rounded-full hover:bg-orange-500 hover:text-white transition">
+                Projects
+            </a>
+
+
+            <a href="{% url 'activity' %}"
+               class="px-4 py-2 rounded-full hover:bg-orange-500 hover:text-white transition">
+                Activity
+            </a>
+
+
+            <a href="{% url 'profile' %}"
+               class="px-4 py-2 rounded-full hover:bg-orange-500 hover:text-white transition">
+                Profile
+            </a>
+
+
+            <a href="{% url 'logout' %}"
+               class="px-4 py-2 rounded-full bg-red-500 text-white hover:bg-red-600 transition">
+                Logout
+            </a>
+
         </div>
 
     </div>
+
 </nav>
 
 
+<!-- PAGE CONTENT -->
+
+<main class="pt-20">
 
     {% block content %}
     {% endblock content %}
 
+</main>
+
 
 {% include "footer.html" %}
+```
 
 </body>
+
 </html>

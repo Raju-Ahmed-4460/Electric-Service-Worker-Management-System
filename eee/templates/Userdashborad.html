@@ -1,7 +1,66 @@
-{% extends "base.html" %}
 {% load static %}
-{% block content %}
-<!-- HERO SECTION  -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    <link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body class="bg-slate-300">
+
+<!-- NAVBAR -->
+<nav class="fixed top-0 left-0 w-full z-50 bg-orange-300">
+    <div class="flex justify-between items-center p-4">
+
+        <!-- Left -->
+        <div class="flex gap-4 items-center ml-32">
+            <img src="{% static 'image/logo-circle.webp' %}"
+     alt=""
+     class="h-10 w-10 cursor-pointer rounded-full hover:scale-105 transition">
+
+            <a href="{% url 'home' %}" class="cursor-pointer hover:bg-orange-500 hover:text-white px-3 py-1 rounded-full transition">
+    Home
+</a>
+                
+        
+        </div>
+
+        <!-- Right -->
+         
+        <div class="flex gap-5 items-center mr-32">
+
+            <a href="#"
+   class="cursor-pointer hover:bg-orange-500 hover:text-white px-3 py-2 rounded-full transition">
+    <i class="fa-solid fa-bell text-xl"></i>
+</a>
+
+            <a href="{% url "creategroup" %}" class="cursor-pointer hover:bg-orange-500 hover:text-white px-3 py-1 rounded-full transition">
+                Explore
+                </a>
+        
+
+            <a href="{% url "login" %}"  class="cursor-pointer hover:bg-orange-500 hover:text-white px-3 py-1 rounded-full transition">
+                Login
+                </a>
+            
+
+            
+
+            <a href="{% url "registration" %}" class="cursor-pointer hover:bg-orange-500 hover:text-white px-3 py-1 rounded-full transition">
+                Sign-Up
+            </a>
+        </div>
+
+    </div>
+</nav>
+
+
+
+    <!-- HERO SECTION  -->
 <section class="relative h-[90vh] overflow-hidden">
 
     <!-- Background Image -->
@@ -66,5 +125,12 @@
 
 </section>
 
-{% endblock content %}
+
+{% include "footer.html" %}
+
+</body>
+</html>
+
+
+
 

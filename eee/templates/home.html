@@ -1,0 +1,118 @@
+
+{% extends "base.html" %}
+
+{% block title %}Home - BuildSync{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+
+<section class="relative h-[55vh] overflow-hidden">
+
+```
+<img src="{% static 'image/b1.jpeg' %}"
+     class="absolute inset-0 w-full h-full object-cover blur-sm scale-105">
+
+<div class="absolute inset-0 bg-black/60"></div>
+
+<div class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white">
+
+    <p class="text-orange-400 text-lg font-semibold mb-2">
+        BUILDSYNC
+    </p>
+
+    <h1 class="text-5xl font-bold mb-4">
+        Welcome Back, {{ request.user.username }}
+    </h1>
+
+    <p class="text-xl text-gray-200">
+        Manage your construction work and projects easily.
+    </p>
+
+</div>
+```
+
+</section>
+
+<!-- DASHBOARD SUMMARY -->
+
+<section class="py-12 px-10">
+
+```
+<div class="max-w-6xl mx-auto">
+
+    <h2 class="text-3xl font-bold text-gray-800 mb-8">
+        My Dashboard
+    </h2>
+
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+
+        <!-- ACTIVE -->
+
+        <div class="bg-white rounded-2xl shadow-md p-6">
+
+            <p class="text-gray-500">
+                Active Tasks
+            </p>
+
+            <h3 class="text-3xl font-bold text-orange-500 mt-2">
+                {{ active_tasks.count }}
+            </h3>
+
+        </div>
+
+
+        <!-- COMPLETED -->
+
+        <div class="bg-white rounded-2xl shadow-md p-6">
+
+            <p class="text-gray-500">
+                Completed
+            </p>
+
+            <h3 class="text-3xl font-bold text-green-500 mt-2">
+                {{ completed_tasks.count }}
+            </h3>
+
+        </div>
+
+
+        <!-- PROJECTS -->
+
+        <div class="bg-white rounded-2xl shadow-md p-6">
+
+            <p class="text-gray-500">
+                My Projects
+            </p>
+
+            <h3 class="text-3xl font-bold text-blue-500 mt-2">
+                {{ projects.count }}
+            </h3>
+
+        </div>
+
+
+        <!-- PENDING -->
+
+        <div class="bg-white rounded-2xl shadow-md p-6">
+
+            <p class="text-gray-500">
+                Pending Tasks
+            </p>
+
+            <h3 class="text-3xl font-bold text-red-500 mt-2">
+                {{ pending_tasks.count }}
+            </h3>
+
+        </div>
+
+    </div>
+
+</div>
+```
+
+</section>
+
+{% endblock content %}

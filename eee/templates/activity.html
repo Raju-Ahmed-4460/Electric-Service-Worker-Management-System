@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Activity - BuildSync{% endblock %}
+
+{% block content %}
+
+<section class="py-12 px-10">
+
+```
+<div class="max-w-5xl mx-auto">
+
+    <h1 class="text-3xl font-bold text-gray-800 mb-8">
+        Recent Activity
+    </h1>
+
+
+    <div class="bg-white rounded-2xl shadow-md p-6">
+
+        {% for activity in activities %}
+
+        <div class="flex gap-4 items-start border-b pb-5 mb-5">
+
+            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+
+                <i class="fa-solid fa-check text-green-500"></i>
+
+            </div>
+
+
+            <div>
+
+                <p class="font-semibold">
+                    {{ activity.title }}
+                </p>
+
+                <p class="text-gray-500 text-sm">
+                    {{ activity.description }}
+                </p>
+
+                <p class="text-xs text-gray-400 mt-1">
+                    {{ activity.created_at }}
+                </p>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <p class="text-gray-500">
+            No recent activity.
+        </p>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+```
+
+</section>
+
+{% endblock content %}

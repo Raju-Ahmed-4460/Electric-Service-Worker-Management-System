@@ -26,7 +26,11 @@ def registration(request):
             user.is_active=False
 
             user.save()
-            return redirect("registration")
+            messages.success(
+                request,
+                "Registration successful! Check your email address and click the activation link before login."
+            )
+            return redirect("login")
     
 
     return render(request,"registration.html",{'form':form})
