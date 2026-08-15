@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}
+My Tasks
+{% endblock %}
+
+{% block content %}
+
+<div class="max-w-7xl mx-auto px-6 py-10">
+
+    <!-- PAGE TITLE -->
+
+    <div class="mb-10">
+
+        <h1 class="text-4xl font-bold text-gray-800">
+            My Tasks
+        </h1>
+
+        <p class="text-gray-500 mt-2">
+            Available tasks based on your applied work
+        </p>
+
+    </div>
+
+
+    <!-- TASKS -->
+
+    {% if tasks %}
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            {% for task in tasks %}
+
+                <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition">
+
+                    <!-- PROJECT NAME -->
+
+                    <div class="mb-3">
+
+                        <span class="text-sm text-orange-500 font-semibold">
+
+                            {{ task.project.name }}
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- TASK TITLE -->
+
+                    <h2 class="text-2xl font-bold text-gray-800 mb-3">
+
+                        {{ task.title }}
+
+                    </h2>
+
+
+                    <!-- DESCRIPTION -->
+
+                    <p class="text-gray-600 mb-5">
+
+                        {{ task.description }}
+
+                    </p>
+
+
+                    <!-- LOCATION -->
+
+                    <div class="flex items-center gap-2 mb-2">
+
+                        <i class="fa-solid fa-location-dot text-orange-500"></i>
+
+                        <span>
+
+                            {{ task.project.location }}
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- START DATE -->
+
+                    <div class="flex items-center gap-2 mb-2">
+
+                        <i class="fa-solid fa-calendar text-orange-500"></i>
+
+                        <span>
+
+                            Start:
+                            {{ task.start_date }}
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- END DATE -->
+
+                    {% if task.end_date %}
+
+                    <div class="flex items-center gap-2 mb-5">
+
+                        <i class="fa-solid fa-calendar-check text-orange-500"></i>
+
+                        <span>
+
+                            End:
+                            {{ task.end_date }}
+
+                        </span>
+
+                    </div>
+
+                    {% endif %}
+
+
+                    <!-- APPLY BUTTON -->
+
+                    {% if task.id in applied_task_ids %}
+
+                        <button
+                            disabled
+                            class="w-full bg-gray-400 text-white py-2 rounded-lg cursor-not-allowed">
+
+                            Already Applied
+
+                        </button>
+
+                    {% else %}
+
+                        <a
+                            href="{% url 'apply_task' task.id %}"
+                            class="block text-center w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg transition">
+
+                            <i class="fa-solid fa-paper-plane mr-2"></i>
+
+                            Apply
+
+                        </a>
+
+                    {% endif %}
+
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <!-- NO TASK -->
+
+        <div class="bg-white rounded-xl shadow-md p-10 text-center">
+
+            <i class="fa-solid fa-briefcase text-5xl text-gray-400 mb-4"></i>
+
+            <h2 class="text-2xl font-bold text-gray-700">
+
+                No tasks available
+
+            </h2>
+
+            <p class="text-gray-500 mt-2">
+
+                No matching tasks are currently available.
+
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

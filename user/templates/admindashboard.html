@@ -1,68 +1,531 @@
 {% load static %}
 
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+
     <link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+          href="{% static 'css/output.css' %}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
 </head>
+
 
 <body class="bg-slate-300">
 
+
+<!-- ===================================================== -->
 <!-- NAVBAR -->
-<nav class="fixed top-0 left-0 w-full z-50 bg-orange-300">
+<!-- ===================================================== -->
+
+<nav class="fixed top-0 left-0 w-full z-50 bg-orange-300 shadow-md">
+
     <div class="flex justify-between items-center p-4">
 
-        <!-- Left -->
-        <div class="flex gap-4 items-center ml-32">
-            <img src="{% static 'image/logo-circle.webp' %}"
-     alt=""
-     class="h-10 w-10 cursor-pointer rounded-full hover:scale-105 transition">
 
-            <a href="{% url 'home' %}" class="cursor-pointer hover:bg-orange-500 hover:text-white px-3 py-1 rounded-full transition">
-    Home
-</a>
-                
-        
+        <!-- LEFT SIDE -->
+
+        <div class="flex gap-4 items-center ml-32">
+
+            <!-- LOGO -->
+
+            <a href="{% url 'admindashboard' %}">
+
+                <img src="{% static 'image/logo-circle.webp' %}"
+                     alt="BuildSync"
+                     class="h-10 w-10 cursor-pointer rounded-full
+                            hover:scale-105 transition">
+
+            </a>
+
+
+            <!-- HOME -->
+
+            <a href="{% url 'home' %}"
+               class="hover:bg-orange-500
+                      hover:text-white
+                      px-4 py-2
+                      rounded-full
+                      transition">
+
+                <i class="fa-solid fa-house mr-1"></i>
+
+                Home
+
+            </a>
+
         </div>
 
-        <!-- Right -->
-        <div class="flex gap-5 items-center mr-32">
-            <a href="{% url "creategroup" %}" class="cursor-pointer hover:bg-orange-500 hover:text-white px-3 py-1 rounded-full transition">
-                Create Group
-                </a>
-        
 
-            <a href="{% url "userlist" %}"  class="cursor-pointer hover:bg-orange-500 hover:text-white px-3 py-1 rounded-full transition">
-                Userlist
-                </a>
-            
+        <!-- RIGHT SIDE -->
+
+        <div class="flex gap-4 items-center mr-32">
+
+
+            <!-- NOTIFICATION -->
 
             <a href="#"
-   class="cursor-pointer hover:bg-orange-500 hover:text-white px-3 py-2 rounded-full transition">
-    <i class="fa-solid fa-bell text-xl"></i>
-</a>
+               class="hover:bg-orange-500
+                      hover:text-white
+                      px-3 py-2
+                      rounded-full
+                      transition">
 
-            <a href="{% url "grouplist" %}" class="cursor-pointer hover:bg-orange-500 hover:text-white px-3 py-1 rounded-full transition">
-                GroupList
+                <i class="fa-solid fa-bell text-xl"></i>
+
             </a>
+
+
+            <!-- CREATE PROJECT -->
+
+            <a href="{% url 'createproject' %}"
+               class="bg-green-500
+                      text-white
+                      hover:bg-green-600
+                      px-4 py-2
+                      rounded-full
+                      transition">
+
+                <i class="fa-solid fa-folder-plus mr-1"></i>
+
+                Create Project
+
+            </a>
+
+
+            <!-- CREATE GROUP -->
+
+            <a href="{% url 'creategroup' %}"
+               class="bg-blue-500
+                      text-white
+                      hover:bg-blue-600
+                      px-4 py-2
+                      rounded-full
+                      transition">
+
+                <i class="fa-solid fa-users-gear mr-1"></i>
+
+                Create Group
+
+            </a>
+
+
+            <!-- USER LIST -->
+
+            <a href="{% url 'userlist' %}"
+               class="hover:bg-orange-500
+                      hover:text-white
+                      px-4 py-2
+                      rounded-full
+                      transition">
+
+                <i class="fa-solid fa-users mr-1"></i>
+
+                User List
+
+            </a>
+
+
+            <!-- GROUP LIST -->
+
+            <a href="{% url 'grouplist' %}"
+               class="hover:bg-orange-500
+                      hover:text-white
+                      px-4 py-2
+                      rounded-full
+                      transition">
+
+                <i class="fa-solid fa-layer-group mr-1"></i>
+
+                Group List
+
+            </a>
+
+
         </div>
 
     </div>
+
 </nav>
 
 
+<!-- ===================================================== -->
+<!-- CONTENT -->
+<!-- ===================================================== -->
 
-    {% block content %}
-    {% endblock content %}
+{% block content %}
 
+
+<!-- ===================================================== -->
+<!-- HERO -->
+<!-- ===================================================== -->
+
+<section class="relative h-[90vh] overflow-hidden">
+
+
+    <!-- BACKGROUND IMAGE -->
+
+    <img src="{% static 'image/b1.jpeg' %}"
+         alt="BuildSync Construction"
+         class="absolute inset-0
+                w-full
+                h-full
+                object-cover
+                blur-sm
+                scale-105">
+
+
+    <!-- DARK OVERLAY -->
+
+    <div class="absolute inset-0 bg-black/50"></div>
+
+
+    <!-- HERO CONTENT -->
+
+    <div class="relative z-10
+                flex flex-col
+                items-center
+                justify-center
+                h-full
+                text-center
+                text-white">
+
+
+        <p class="text-orange-400
+                  text-lg
+                  font-semibold
+                  mb-3">
+
+            BUILDSYNC ADMIN
+
+        </p>
+
+
+        <h1 class="text-6xl
+                   font-bold
+                   mb-4">
+
+            Welcome to BuildSync
+
+        </h1>
+
+
+        <p class="text-2xl mb-8">
+
+            Manage Construction Projects Efficiently
+
+        </p>
+
+
+        <!-- CREATE PROJECT -->
+
+        <a href="{% url 'createproject' %}"
+           class="bg-orange-500
+                  hover:bg-orange-600
+                  px-8
+                  py-4
+                  rounded-lg
+                  font-semibold
+                  text-lg
+                  transition">
+
+            <i class="fa-solid fa-folder-plus mr-2"></i>
+
+            Create New Project
+
+        </a>
+
+
+    </div>
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- ADMIN PANEL -->
+<!-- ===================================================== -->
+
+<section class="py-16 bg-slate-100">
+
+
+    <div class="text-center mb-10">
+
+        <h2 class="text-4xl
+                   font-bold
+                   text-gray-800">
+
+            Admin Panel
+
+        </h2>
+
+
+        <p class="text-gray-500 mt-2">
+
+            Manage projects, users and groups
+
+        </p>
+
+    </div>
+
+
+    <!-- CARDS -->
+
+    <div class="grid grid-cols-1
+                md:grid-cols-2
+                lg:grid-cols-4
+                gap-8
+                px-10">
+
+
+        <!-- ================================================= -->
+        <!-- CREATE PROJECT -->
+        <!-- ================================================= -->
+
+        <div class="bg-white
+                    p-8
+                    rounded-xl
+                    shadow-md
+                    text-center
+                    hover:shadow-xl
+                    transition">
+
+
+            <div class="text-orange-500
+                        text-4xl
+                        mb-4">
+
+                <i class="fa-solid fa-building"></i>
+
+            </div>
+
+
+            <h3 class="text-xl
+                       font-semibold
+                       mb-2">
+
+                Create Project
+
+            </h3>
+
+
+            <p class="text-gray-600 mb-5">
+
+                Create and manage construction projects.
+
+            </p>
+
+
+            <a href="{% url 'createproject' %}"
+               class="inline-block
+                      bg-orange-500
+                      text-white
+                      px-5
+                      py-2
+                      rounded-lg
+                      hover:bg-orange-600
+                      transition">
+
+                Create Project
+
+            </a>
+
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- CREATE GROUP -->
+        <!-- ================================================= -->
+
+        <div class="bg-white
+                    p-8
+                    rounded-xl
+                    shadow-md
+                    text-center
+                    hover:shadow-xl
+                    transition">
+
+
+            <div class="text-blue-500
+                        text-4xl
+                        mb-4">
+
+                <i class="fa-solid fa-users-gear"></i>
+
+            </div>
+
+
+            <h3 class="text-xl
+                       font-semibold
+                       mb-2">
+
+                Create Group
+
+            </h3>
+
+
+            <p class="text-gray-600 mb-5">
+
+                Create groups and assign permissions.
+
+            </p>
+
+
+            <a href="{% url 'creategroup' %}"
+               class="inline-block
+                      bg-blue-500
+                      text-white
+                      px-5
+                      py-2
+                      rounded-lg
+                      hover:bg-blue-600
+                      transition">
+
+                Create Group
+
+            </a>
+
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- USER LIST -->
+        <!-- ================================================= -->
+
+        <div class="bg-white
+                    p-8
+                    rounded-xl
+                    shadow-md
+                    text-center
+                    hover:shadow-xl
+                    transition">
+
+
+            <div class="text-green-500
+                        text-4xl
+                        mb-4">
+
+                <i class="fa-solid fa-users"></i>
+
+            </div>
+
+
+            <h3 class="text-xl
+                       font-semibold
+                       mb-2">
+
+                User List
+
+            </h3>
+
+
+            <p class="text-gray-600 mb-5">
+
+                View all registered users and assign roles.
+
+            </p>
+
+
+            <a href="{% url 'userlist' %}"
+               class="inline-block
+                      bg-green-500
+                      text-white
+                      px-5
+                      py-2
+                      rounded-lg
+                      hover:bg-green-600
+                      transition">
+
+                View Users
+
+            </a>
+
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- GROUP LIST -->
+        <!-- ================================================= -->
+
+        <div class="bg-white
+                    p-8
+                    rounded-xl
+                    shadow-md
+                    text-center
+                    hover:shadow-xl
+                    transition">
+
+
+            <div class="text-purple-500
+                        text-4xl
+                        mb-4">
+
+                <i class="fa-solid fa-layer-group"></i>
+
+            </div>
+
+
+            <h3 class="text-xl
+                       font-semibold
+                       mb-2">
+
+                Group List
+
+            </h3>
+
+
+            <p class="text-gray-600 mb-5">
+
+                View all groups and their permissions.
+
+            </p>
+
+
+            <a href="{% url 'grouplist' %}"
+               class="inline-block
+                      bg-purple-500
+                      text-white
+                      px-5
+                      py-2
+                      rounded-lg
+                      hover:bg-purple-600
+                      transition">
+
+                View Groups
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+{% endblock content %}
+
+
+<!-- ===================================================== -->
+<!-- FOOTER -->
+<!-- ===================================================== -->
 
 {% include "footer.html" %}
 
+
 </body>
+
 </html>

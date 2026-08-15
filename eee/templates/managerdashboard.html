@@ -1,86 +1,159 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+
+    <title>Manager Dashboard</title>
+
     <link rel="stylesheet" href="{% static 'css/output.css' %}">
+
     <link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
+
 
 <body class="bg-slate-300">
 
+
+<!-- ===================================================== -->
 <!-- NAVBAR -->
-<nav class="fixed top-0 left-0 w-full z-50 bg-orange-300">
+<!-- ===================================================== -->
+
+<nav class="fixed top-0 left-0 w-full z-50 bg-orange-300 shadow-md">
+
     <div class="flex justify-between items-center p-4">
 
-        <!-- Left -->
-        <div class="flex gap-4 items-center ml-32">
-            <img src="{% static 'image/logo-circle.webp' %}"
-     alt=""
-     class="h-10 w-10 cursor-pointer rounded-full hover:scale-105 transition">
 
-            <a href="{% url 'home' %}" class="cursor-pointer hover:bg-orange-500 hover:text-white px-3 py-1 rounded-full transition">
-    Home
-</a>
-                
-        
+        <!-- LEFT -->
+
+        <div class="flex gap-4 items-center ml-32">
+
+            <!-- LOGO -->
+
+            <img src="{% static 'image/logo-circle.webp' %}"
+                 alt="BuildSync"
+                 class="h-10 w-10 cursor-pointer rounded-full hover:scale-105 transition">
+
+
+            <!-- HOME -->
+
+            <a href="{% url 'home' %}"
+               class="cursor-pointer hover:bg-orange-500 hover:text-white px-4 py-2 rounded-full transition">
+
+                <i class="fa-solid fa-house mr-1"></i>
+
+                Home
+
+            </a>
+
         </div>
 
-        <!-- Right -->
-         
-        <div class="flex gap-5 items-center mr-32">
+
+        <!-- RIGHT -->
+
+        <div class="flex gap-4 items-center mr-32">
+
+
+            <!-- NOTIFICATION -->
 
             <a href="#"
-   class="cursor-pointer hover:bg-orange-500 hover:text-white px-3 py-2 rounded-full transition">
-    <i class="fa-solid fa-bell text-xl"></i>
-</a>
+               class="cursor-pointer hover:bg-orange-500 hover:text-white px-3 py-2 rounded-full transition">
 
-            <a href="{% url "creategroup" %}" class="cursor-pointer hover:bg-orange-500 hover:text-white px-3 py-1 rounded-full transition">
-                CreateGroup
-                </a>
-        
+                <i class="fa-solid fa-bell text-xl"></i>
 
-            <a href="{% url "userlist" %}"  class="cursor-pointer hover:bg-orange-500 hover:text-white px-3 py-1 rounded-full transition">
-                UserList
-                </a>
-            
-
-            
-
-            <a href="{% url "grouplist" %}" class="cursor-pointer hover:bg-orange-500 hover:text-white px-3 py-1 rounded-full transition">
-                GroupList
             </a>
+
+
+            <!-- CREATE TASK -->
+
+            <a href="{% url 'create_task' %}"
+               class="bg-green-500 text-white hover:bg-green-600 px-4 py-2 rounded-full transition">
+
+                <i class="fa-solid fa-list-check mr-1"></i>
+
+                Create Task
+
+            </a>
+
+
+            <!-- USER LIST -->
+
+            <a href="{% url 'userlist' %}"
+               class="bg-blue-500 text-white hover:bg-blue-600 px-4 py-2 rounded-full transition">
+
+                <i class="fa-solid fa-users mr-1"></i>
+
+                User List
+
+            </a>
+
         </div>
 
     </div>
+
 </nav>
+
+
+
+<!-- ===================================================== -->
+<!-- HERO SECTION -->
+<!-- ===================================================== -->
 
 <section class="relative h-[90vh] overflow-hidden">
 
-    <!-- Background Image -->
+
+    <!-- BACKGROUND IMAGE -->
+
     <img src="{% static 'image/b1.jpeg' %}"
          class="absolute inset-0 w-full h-full object-cover blur-sm scale-105">
 
-    <!-- Dark Overlay -->
+
+    <!-- DARK OVERLAY -->
+
     <div class="absolute inset-0 bg-black/50"></div>
 
-    <!-- Content -->
+
+    <!-- CONTENT -->
+
     <div class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white">
 
+
+        <p class="text-orange-400 text-lg font-semibold mb-3">
+
+            BUILDSYNC MANAGER
+
+        </p>
+
+
         <h1 class="text-6xl font-bold mb-4">
+
             Welcome to BuildSync
+
         </h1>
 
-        <p class="text-2xl mb-6"> 
-            Manage Construction Projects Efficiently
+
+        <p class="text-2xl mb-8">
+
+            Manage construction tasks efficiently
+
         </p>
 
-        <button class="bg-orange-500 hover:bg-orange-600 px-6 py-3 rounded-lg font-semibold transition">
-            Get Started
-        </button>
+
+        <!-- CREATE TASK BUTTON -->
+
+        <a href="{% url 'create_task' %}"
+           class="bg-orange-500 hover:bg-orange-600 px-8 py-4 rounded-lg font-semibold text-lg transition">
+
+            <i class="fa-solid fa-plus mr-2"></i>
+
+            Create New Task
+
+        </a>
+
 
     </div>
 
@@ -88,46 +161,200 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
 
 
+<!-- ===================================================== -->
+<!-- MANAGER SERVICES -->
+<!-- ===================================================== -->
 
-<!-- Our Services Section -->
 <section class="py-16 bg-slate-100">
 
+
     <div class="text-center mb-10">
+
         <h2 class="text-4xl font-bold text-gray-800">
-            Our Services
+
+            Manager Panel
+
         </h2>
+
         <p class="text-gray-500 mt-2">
-            What we provide for your construction needs
+
+            Manage tasks, workers and assignments
+
         </p>
+
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 px-10">
 
-        <div class="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-xl transition">
-            <h3 class="text-xl font-semibold mb-2">Project Management</h3>
-            <p class="text-gray-600">Manage all construction projects efficiently.</p>
+
+    <!-- CARDS -->
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-10">
+
+
+        <!-- ================================================= -->
+        <!-- CREATE TASK -->
+        <!-- ================================================= -->
+
+        <div class="bg-white p-8 rounded-lg shadow-md text-center hover:shadow-xl transition">
+
+            <div class="text-orange-500 text-4xl mb-4">
+
+                <i class="fa-solid fa-list-check"></i>
+
+            </div>
+
+
+            <h3 class="text-xl font-semibold mb-2">
+
+                Create Task
+
+            </h3>
+
+
+            <p class="text-gray-600 mb-5">
+
+                Create new construction tasks for workers.
+
+            </p>
+
+
+            <a href="{% url 'create_task' %}"
+               class="inline-block bg-orange-500 text-white px-5 py-2 rounded-lg hover:bg-orange-600 transition">
+
+                Create Task
+
+            </a>
+
         </div>
 
-        <div class="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-xl transition">
-            <h3 class="text-xl font-semibold mb-2">Worker Allocation</h3>
-            <p class="text-gray-600">Assign workers and helpers easily.</p>
+
+
+        <!-- ================================================= -->
+        <!-- AVAILABLE TASKS -->
+        <!-- ================================================= -->
+
+        <div class="bg-white p-8 rounded-lg shadow-md text-center hover:shadow-xl transition">
+
+            <div class="text-blue-500 text-4xl mb-4">
+
+                <i class="fa-solid fa-clipboard-list"></i>
+
+            </div>
+
+
+            <h3 class="text-xl font-semibold mb-2">
+
+                Available Tasks
+
+            </h3>
+
+
+            <p class="text-gray-600 mb-5">
+
+                View the tasks created for workers.
+
+            </p>
+
+
+            <a href="{% url 'my_tasks' %}"
+               class="inline-block bg-blue-500 text-white px-5 py-2 rounded-lg hover:bg-blue-600 transition">
+
+                View Tasks
+
+            </a>
+
         </div>
 
-        <div class="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-xl transition">
-            <h3 class="text-xl font-semibold mb-2">Real-time Updates</h3>
-            <p class="text-gray-600">Get live updates of ongoing work.</p>
+
+
+        <!-- ================================================= -->
+        <!-- USER LIST -->
+        <!-- ================================================= -->
+
+        <div class="bg-white p-8 rounded-lg shadow-md text-center hover:shadow-xl transition">
+
+            <div class="text-green-500 text-4xl mb-4">
+
+                <i class="fa-solid fa-users"></i>
+
+            </div>
+
+
+            <h3 class="text-xl font-semibold mb-2">
+
+                User List
+
+            </h3>
+
+
+            <p class="text-gray-600 mb-5">
+
+                View all registered users and assign work.
+
+            </p>
+
+
+            <a href="{% url 'userlist' %}"
+               class="inline-block bg-green-500 text-white px-5 py-2 rounded-lg hover:bg-green-600 transition">
+
+                View Users
+
+            </a>
+
         </div>
+
+
+
+        <!-- ================================================= -->
+        <!-- WORKER APPLICATIONS -->
+        <!-- ================================================= -->
+
+        <div class="bg-white p-8 rounded-lg shadow-md text-center hover:shadow-xl transition">
+
+            <div class="text-red-500 text-4xl mb-4">
+
+                <i class="fa-solid fa-file-signature"></i>
+
+            </div>
+
+
+            <h3 class="text-xl font-semibold mb-2">
+
+                Worker Applications
+
+            </h3>
+
+
+            <p class="text-gray-600 mb-5">
+
+                View and manage worker applications.
+
+            </p>
+
+
+            <a href="#"
+               class="inline-block bg-red-500 text-white px-5 py-2 rounded-lg hover:bg-red-600 transition">
+
+                Applications
+
+            </a>
+
+        </div>
+
 
     </div>
 
 </section>
 
 
+
+<!-- ===================================================== -->
+<!-- FOOTER -->
+<!-- ===================================================== -->
 
 {% include "footer.html" %}
 
+
 </body>
+
 </html>
-
-
-
