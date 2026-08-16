@@ -14,35 +14,29 @@ from .models import (
     Project,
     Task,
     TaskApplication,
+    WorkAssignment,
 )
+
 
 User = get_user_model()
 
 
-# =========================================================
-# ROLE CHECK
-# =========================================================
-
 def is_manager(user):
-    return user.groups.filter(name="Manager").exists()
+    return (
+        user.is_authenticated
+        and user.groups.filter(
+            name="Manager"
+        ).exists()
+    )
 
-
-# =========================================================
-# USER DASHBOARD
-# =========================================================
-
-# =========================================================
-# USER DASHBOARD
-# PUBLIC
-# =========================================================
 
 def Userdashboard(request):
 
-    # -----------------------------------------------------
-    # Public data
-    # -----------------------------------------------------
+    user = request.user
 
-    projects = Project.objects.all().order_by("-created_at")
+    projects = Project.objects.all().order_by(
+        "-created_at"
+    )
 
     tasks = Task.objects.filter(
         status="Available"
@@ -50,23 +44,16 @@ def Userdashboard(request):
         "project"
     )
 
-    # -----------------------------------------------------
-    # Default empty data
-    # -----------------------------------------------------
+    active_tasks = TaskApplication.objects.none()
+    completed_tasks = TaskApplication.objects.none()
+    pending_tasks = TaskApplication.objects.none()
+    user_projects = Project.objects.none()
+    assigned_works = WorkAssignment.objects.none()
 
-    active_tasks = []
-    completed_tasks = []
-    pending_tasks = []
-    user_projects = []
-
-    # -----------------------------------------------------
-    # If user is logged in
-    # -----------------------------------------------------
-
-    if request.user.is_authenticated:
+    if user.is_authenticated:
 
         active_tasks = TaskApplication.objects.filter(
-            user=request.user,
+            user=user,
             status="Accepted",
             task__status="Assigned"
         ).select_related(
@@ -75,7 +62,7 @@ def Userdashboard(request):
         )
 
         completed_tasks = TaskApplication.objects.filter(
-            user=request.user,
+            user=user,
             status="Accepted",
             task__status="Completed"
         ).select_related(
@@ -84,7 +71,7 @@ def Userdashboard(request):
         )
 
         pending_tasks = TaskApplication.objects.filter(
-            user=request.user,
+            user=user,
             status="Pending"
         ).select_related(
             "task",
@@ -92,34 +79,35 @@ def Userdashboard(request):
         )
 
         user_projects = Project.objects.filter(
-            tasks__applications__user=request.user
+            tasks__applications__user=user
         ).distinct()
 
-    # -----------------------------------------------------
-    # Render dashboard
-    # -----------------------------------------------------
+        assigned_works = WorkAssignment.objects.filter(
+            worker=user
+        ).select_related(
+            "worker",
+            "assigned_by"
+        ).order_by(
+            "-assigned_at"
+        )
+
+    context = {
+        "projects": projects,
+        "tasks": tasks,
+        "active_tasks": active_tasks,
+        "completed_tasks": completed_tasks,
+        "pending_tasks": pending_tasks,
+        "user_projects": user_projects,
+        "assigned_works": assigned_works,
+        "is_logged_in": user.is_authenticated,
+    }
 
     return render(
         request,
         "Userdashborad.html",
-        {
-            "projects": projects,
-            "tasks": tasks,
-
-            "active_tasks": active_tasks,
-            "completed_tasks": completed_tasks,
-            "pending_tasks": pending_tasks,
-
-            "user_projects": user_projects,
-
-            "is_logged_in": request.user.is_authenticated,
-        }
+        context
     )
 
-
-# =========================================================
-# MANAGER DASHBOARD
-# =========================================================
 
 @login_required
 def Managerdashboard(request):
@@ -139,12 +127,20 @@ def Managerdashboard(request):
     )
 
 
-# =========================================================
-# APPLY FOR WORK
-# =========================================================
-
 @login_required
 def apply_work(request):
+
+    if (
+        request.user.is_superuser
+        or is_manager(request.user)
+    ):
+
+        messages.error(
+            request,
+            "Managers and Superusers cannot apply for worker jobs."
+        )
+
+        return redirect("profile")
 
     if request.method == "POST":
 
@@ -152,7 +148,9 @@ def apply_work(request):
 
         if form.is_valid():
 
-            application = form.save(commit=False)
+            application = form.save(
+                commit=False
+            )
 
             application.user = request.user
 
@@ -163,7 +161,7 @@ def apply_work(request):
                 "Your work application has been submitted successfully."
             )
 
-            return redirect("userdashboard")
+            return redirect("profile")
 
     else:
 
@@ -178,14 +176,12 @@ def apply_work(request):
     )
 
 
-# =========================================================
-# PROJECT LIST
-# =========================================================
-
 @login_required
 def projects(request):
 
-    project_list = Project.objects.all().order_by("-created_at")
+    project_list = Project.objects.all().order_by(
+        "-created_at"
+    )
 
     return render(
         request,
@@ -196,10 +192,6 @@ def projects(request):
     )
 
 
-# =========================================================
-# ACTIVITY
-# =========================================================
-
 @login_required
 def activity(request):
 
@@ -209,23 +201,38 @@ def activity(request):
     )
 
 
-# =========================================================
-# PROFILE
-# =========================================================
-
 @login_required
 def profile(request):
 
-    return render(
-        request,
-        "profile.html"
+    user = request.user
+
+    work_applications = WorkApplication.objects.filter(
+        user=user
+    ).order_by(
+        "-id"
     )
 
+    if (
+        user.is_superuser
+        or is_manager(user)
+    ):
 
-# =========================================================
-# CREATE PROJECT
-# ONLY SUPERUSER
-# =========================================================
+        dashboard_url = "managerdashboard"
+
+    else:
+
+        dashboard_url = "userdashboard"
+
+    return render(
+        request,
+        "profile.html",
+        {
+            "user": user,
+            "work_applications": work_applications,
+            "dashboard_url": dashboard_url,
+        }
+    )
+
 
 @login_required
 def createproject(request):
@@ -245,7 +252,9 @@ def createproject(request):
 
         if form.is_valid():
 
-            project = form.save(commit=False)
+            project = form.save(
+                commit=False
+            )
 
             project.created_by = request.user
 
@@ -271,11 +280,6 @@ def createproject(request):
     )
 
 
-# =========================================================
-# CREATE TASK
-# ONLY MANAGER
-# =========================================================
-
 @login_required
 def create_task(request):
 
@@ -294,7 +298,7 @@ def create_task(request):
 
         if form.is_valid():
 
-            task = form.save()
+            form.save()
 
             messages.success(
                 request,
@@ -316,17 +320,13 @@ def create_task(request):
     )
 
 
-# =========================================================
-# MY TASKS
-# ONLY NORMAL USERS
-# =========================================================
-
 @login_required
 def my_tasks(request):
 
-    # Manager and Superuser cannot apply for worker tasks
-
-    if request.user.is_superuser or is_manager(request.user):
+    if (
+        request.user.is_superuser
+        or is_manager(request.user)
+    ):
 
         messages.error(
             request,
@@ -335,27 +335,23 @@ def my_tasks(request):
 
         return redirect("home")
 
-    # -----------------------------------------------------
-    # Accepted work applications
-    # -----------------------------------------------------
+    assigned_works = WorkAssignment.objects.filter(
+        worker=request.user
+    ).select_related(
+        "assigned_by"
+    ).order_by(
+        "-assigned_at"
+    )
 
     work_applications = WorkApplication.objects.filter(
         user=request.user,
         status="Accepted"
     )
 
-    # -----------------------------------------------------
-    # Work types
-    # -----------------------------------------------------
-
     work_types = work_applications.values_list(
         "work_type",
         flat=True
     )
-
-    # -----------------------------------------------------
-    # Available tasks
-    # -----------------------------------------------------
 
     tasks = Task.objects.filter(
         status="Available",
@@ -366,10 +362,6 @@ def my_tasks(request):
     ).select_related(
         "project"
     )
-
-    # -----------------------------------------------------
-    # Match task with work type
-    # -----------------------------------------------------
 
     matching_tasks = []
 
@@ -390,10 +382,6 @@ def my_tasks(request):
 
                 break
 
-    # -----------------------------------------------------
-    # Already applied tasks
-    # -----------------------------------------------------
-
     applied_task_ids = set(
         TaskApplication.objects.filter(
             user=request.user
@@ -407,23 +395,20 @@ def my_tasks(request):
         request,
         "my_tasks.html",
         {
+            "assigned_works": assigned_works,
             "tasks": matching_tasks,
             "applied_task_ids": applied_task_ids,
         }
     )
 
 
-# =========================================================
-# APPLY FOR TASK
-# ONLY NORMAL USER
-# =========================================================
-
 @login_required
 def apply_task(request, task_id):
 
-    # Manager / Superuser cannot apply
-
-    if request.user.is_superuser or is_manager(request.user):
+    if (
+        request.user.is_superuser
+        or is_manager(request.user)
+    ):
 
         messages.error(
             request,
@@ -432,26 +417,16 @@ def apply_task(request, task_id):
 
         return redirect("home")
 
-    # -----------------------------------------------------
-    # Get task
-    # -----------------------------------------------------
-
     task = get_object_or_404(
         Task,
         id=task_id
     )
 
-    # -----------------------------------------------------
-    # POST only
-    # -----------------------------------------------------
-
     if request.method != "POST":
 
-        return redirect("my_tasks")
-
-    # -----------------------------------------------------
-    # Task must be Available
-    # -----------------------------------------------------
+        return redirect(
+            "my_tasks"
+        )
 
     if task.status != "Available":
 
@@ -460,11 +435,9 @@ def apply_task(request, task_id):
             "This task is no longer available."
         )
 
-        return redirect("my_tasks")
-
-    # -----------------------------------------------------
-    # Already applied?
-    # -----------------------------------------------------
+        return redirect(
+            "my_tasks"
+        )
 
     already_applied = TaskApplication.objects.filter(
         task=task,
@@ -478,11 +451,9 @@ def apply_task(request, task_id):
             "You have already applied for this task."
         )
 
-        return redirect("my_tasks")
-
-    # -----------------------------------------------------
-    # Create application
-    # -----------------------------------------------------
+        return redirect(
+            "my_tasks"
+        )
 
     TaskApplication.objects.create(
         task=task,
@@ -494,25 +465,148 @@ def apply_task(request, task_id):
         "You successfully applied for this task."
     )
 
-    return redirect("my_tasks")
-
-# =========================================================
-# ASSIGN WORK
-# ONLY MANAGER
-# =========================================================
-
-from django.contrib.auth.models import User
-from django.shortcuts import render, get_object_or_404
+    return redirect(
+        "my_tasks"
+    )
 
 
+@login_required
 def assignwork(request, user_id):
 
-    user = get_object_or_404(User, id=user_id)
+    if not is_manager(request.user):
+
+        messages.error(
+            request,
+            "Only Manager can assign work."
+        )
+
+        return redirect("home")
+
+    worker = get_object_or_404(
+        User,
+        id=user_id
+    )
+
+    work_applications = WorkApplication.objects.filter(
+        user=worker
+    ).order_by(
+        "-id"
+    )
+
+    if request.method == "POST":
+
+        work_name = request.POST.get(
+            "work_name",
+            ""
+        ).strip()
+
+        description = request.POST.get(
+            "description",
+            ""
+        ).strip()
+
+        location = request.POST.get(
+            "location",
+            ""
+        ).strip()
+
+        if not work_name:
+
+            messages.error(
+                request,
+                "Work name is required."
+            )
+
+            return render(
+                request,
+                "assignwork.html",
+                {
+                    "user": worker,
+                    "work_applications": work_applications,
+                }
+            )
+
+        WorkAssignment.objects.create(
+            worker=worker,
+            assigned_by=request.user,
+            work_title=work_name,
+            description=description,
+            location=location,
+        )
+
+        messages.success(
+            request,
+            f"Work assigned successfully to {worker.username}."
+        )
+
+        return redirect(
+            "userlist"
+        )
 
     return render(
         request,
         "assignwork.html",
         {
-            "user": user
+            "user": worker,
+            "work_applications": work_applications,
+        }
+    )
+
+
+def explore_services(request):
+
+    services = [
+        {
+            "icon": "⚡",
+            "title": "Electrical Work",
+            "description": "Professional electrical installation, repair and maintenance services.",
+        },
+        {
+            "icon": "💡",
+            "title": "House Wiring",
+            "description": "Complete house wiring, rewiring and electrical connection services.",
+        },
+        {
+            "icon": "🔌",
+            "title": "Electrical Repair",
+            "description": "Troubleshooting and repair for electrical problems in homes and buildings.",
+        },
+        {
+            "icon": "🔧",
+            "title": "Pipe Fitting",
+            "description": "Reliable pipe fitting and installation services for residential projects.",
+        },
+        {
+            "icon": "🚿",
+            "title": "Plumbing Work",
+            "description": "Plumbing installation, repair and maintenance for your home.",
+        },
+        {
+            "icon": "🛠️",
+            "title": "Maintenance & Repair",
+            "description": "General maintenance and repair services for different types of projects.",
+        },
+        {
+            "icon": "👷",
+            "title": "Worker Assignment",
+            "description": "Managers can assign suitable workers to specific jobs and projects.",
+        },
+        {
+            "icon": "📋",
+            "title": "Task Management",
+            "description": "Create, assign, apply for and track work tasks efficiently.",
+        },
+        {
+            "icon": "📍",
+            "title": "Location Based Work",
+            "description": "Keep track of where assigned work is being performed.",
+        },
+    ]
+
+    return render(
+        request,
+        "explore_services.html",
+        {
+            "services": services,
         }
     )

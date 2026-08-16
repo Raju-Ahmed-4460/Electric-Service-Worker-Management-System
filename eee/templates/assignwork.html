@@ -2,111 +2,182 @@
 
 {% block content %}
 
-<div class="bg-slate-100 min-h-screen pt-20 px-10">
+<div class="bg-slate-100 min-h-screen pt-20 px-6 md:px-10">
 
-    <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-8">
+    <div class="max-w-3xl mx-auto">
 
-        <h1 class="text-3xl font-bold text-center mb-8">
-            Assign Work
-        </h1>
+        <div class="bg-white rounded-lg shadow-lg p-8">
 
+            <h1 class="text-3xl font-bold text-center mb-8">
+                Assign Work
+            </h1>
 
-        <!-- Selected User -->
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-5 mb-6">
 
-        <div class="bg-blue-50 border border-blue-200 rounded-lg p-5 mb-6">
+                <h2 class="text-xl font-semibold text-blue-700 mb-3">
+                    Selected User
+                </h2>
 
-            <h2 class="text-xl font-semibold text-blue-700 mb-3">
-                Selected User
-            </h2>
+                <p class="text-lg mb-2">
+                    <strong>Username:</strong>
+                    {{ user.username }}
+                </p>
 
-            <p class="text-lg">
-                <strong>Username:</strong>
-                {{ user.username }}
-            </p>
+                <p class="text-lg">
+                    <strong>Email:</strong>
+                    {{ user.email }}
+                </p>
 
-            <p class="text-lg">
-                <strong>Email:</strong>
-                {{ user.email }}
-            </p>
+            </div>
+
+            <div class="bg-green-50 border border-green-200 rounded-lg p-5 mb-8">
+
+                <h2 class="text-xl font-semibold text-green-700 mb-4">
+                    Work Applications
+                </h2>
+
+                {% if work_applications %}
+
+                    <div class="space-y-4">
+
+                        {% for application in work_applications %}
+
+                            <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+
+                                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+
+                                    <div>
+
+                                        <p class="text-lg font-semibold text-gray-800">
+                                            {{ application.work_type }}
+                                        </p>
+
+                                        <p class="text-sm text-gray-500 mt-1">
+                                            Applied:
+                                            {{ application.id }}
+                                        </p>
+
+                                    </div>
+
+                                    {% if application.status == "Accepted" %}
+
+                                        <span class="inline-block w-fit px-3 py-1 rounded-full text-sm font-semibold bg-green-100 text-green-700">
+                                            Accepted
+                                        </span>
+
+                                    {% elif application.status == "Pending" %}
+
+                                        <span class="inline-block w-fit px-3 py-1 rounded-full text-sm font-semibold bg-yellow-100 text-yellow-700">
+                                            Pending
+                                        </span>
+
+                                    {% elif application.status == "Rejected" %}
+
+                                        <span class="inline-block w-fit px-3 py-1 rounded-full text-sm font-semibold bg-red-100 text-red-700">
+                                            Rejected
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="inline-block w-fit px-3 py-1 rounded-full text-sm font-semibold bg-gray-100 text-gray-700">
+                                            {{ application.status }}
+                                        </span>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% else %}
+
+                    <div class="bg-white border border-gray-200 rounded-lg p-5 text-center">
+
+                        <p class="text-gray-500">
+                            This user has not applied for any work yet.
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="mb-5">
+
+                    <label class="block font-semibold mb-2">
+                        Work Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="work_name"
+                        placeholder="Enter work name"
+                        class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        required
+                    >
+
+                </div>
+
+                <div class="mb-5">
+
+                    <label class="block font-semibold mb-2">
+                        Work Description
+                    </label>
+
+                    <textarea
+                        name="description"
+                        rows="4"
+                        placeholder="Enter work details"
+                        class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    ></textarea>
+
+                </div>
+
+                <div class="mb-5">
+
+                    <label class="block font-semibold mb-2">
+                        Location
+                    </label>
+
+                    <input
+                        type="text"
+                        name="location"
+                        placeholder="Enter work location"
+                        class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    >
+
+                </div>
+
+                <div class="flex justify-between items-center">
+
+                    <a
+                        href="{% url 'userlist' %}"
+                        class="bg-gray-500 hover:bg-gray-600 text-white px-5 py-2 rounded-md transition"
+                    >
+                        Back
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="bg-purple-500 hover:bg-purple-600 text-white px-5 py-2 rounded-md transition"
+                    >
+                        Assign Work
+                    </button>
+
+                </div>
+
+            </form>
 
         </div>
-
-
-        <!-- Work Form -->
-
-        <form method="POST">
-
-            {% csrf_token %}
-
-            <div class="mb-5">
-
-                <label class="block font-semibold mb-2">
-                    Work Name
-                </label>
-
-                <input
-                    type="text"
-                    name="work_name"
-                    placeholder="Enter work name"
-                    class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                    required
-                >
-
-            </div>
-
-
-            <div class="mb-5">
-
-                <label class="block font-semibold mb-2">
-                    Work Description
-                </label>
-
-                <textarea
-                    name="description"
-                    rows="4"
-                    placeholder="Enter work details"
-                    class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                ></textarea>
-
-            </div>
-
-
-            <div class="mb-5">
-
-                <label class="block font-semibold mb-2">
-                    Location
-                </label>
-
-                <input
-                    type="text"
-                    name="location"
-                    placeholder="Enter work location"
-                    class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                >
-
-            </div>
-
-
-            <div class="flex justify-between items-center">
-
-                <a
-                    href="{% url 'userlist' %}"
-                    class="bg-gray-500 hover:bg-gray-600 text-white px-5 py-2 rounded-md"
-                >
-                    Back
-                </a>
-
-
-                <button
-                    type="submit"
-                    class="bg-purple-500 hover:bg-purple-600 text-white px-5 py-2 rounded-md"
-                >
-                    Assign Work
-                </button>
-
-            </div>
-
-        </form>
 
     </div>
 

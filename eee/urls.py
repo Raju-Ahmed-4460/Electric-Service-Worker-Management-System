@@ -12,6 +12,7 @@ from eee.views import (
     my_tasks,
     apply_task,
     assignwork,
+    explore_services,
 )
 
 
@@ -21,6 +22,12 @@ urlpatterns = [
         "userdashboard/",
         Userdashboard,
         name="userdashboard"
+    ),
+
+    path(
+        "explore/",
+        explore_services,
+        name="explore_services"
     ),
 
     path(
@@ -76,5 +83,10 @@ urlpatterns = [
         apply_task,
         name="apply_task"
     ),
-    path("assignwork/<int:user_id>/",assignwork, name="assignwork")
+
+    path(
+        "assignwork/<int:user_id>/",
+        assignwork,
+        name="assignwork"
+    ),
 ]

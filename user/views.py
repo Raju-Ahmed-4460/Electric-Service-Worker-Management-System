@@ -20,10 +20,6 @@ from django.contrib.auth.decorators import login_required
 User = get_user_model()
 
 
-# =========================================================
-# REGISTRATION
-# =========================================================
-
 def registration(request):
 
     form = RegistrationForm()
@@ -60,10 +56,6 @@ def registration(request):
     )
 
 
-# =========================================================
-# ACCOUNT ACTIVATION
-# =========================================================
-
 def activate(request, uid, token):
 
     try:
@@ -99,10 +91,6 @@ def activate(request, uid, token):
     )
 
 
-# =========================================================
-# LOGIN
-# =========================================================
-
 def user_login(request):
 
     form = login_form()
@@ -134,19 +122,11 @@ def user_login(request):
                     user
                 )
 
-                # -----------------------------------------
-                # SUPERUSER
-                # -----------------------------------------
-
                 if user.is_superuser:
 
                     return redirect(
                         "admindashboard"
                     )
-
-                # -----------------------------------------
-                # MANAGER
-                # -----------------------------------------
 
                 if user.groups.filter(
                     name="Manager"
@@ -155,10 +135,6 @@ def user_login(request):
                     return redirect(
                         "managerdashboard"
                     )
-
-                # -----------------------------------------
-                # NORMAL USER
-                # -----------------------------------------
 
                 return redirect(
                     "home"
@@ -173,10 +149,6 @@ def user_login(request):
     )
 
 
-# =========================================================
-# LOGOUT
-# =========================================================
-
 @login_required
 def user_logout(request):
 
@@ -186,10 +158,6 @@ def user_logout(request):
         "login"
     )
 
-
-# =========================================================
-# HOME
-# =========================================================
 
 @login_required
 def home(request):
@@ -205,15 +173,9 @@ def home(request):
     )
 
 
-# =========================================================
-# ASSIGN GROUP
-# SUPERUSER + MANAGER
-# =========================================================
-
 @login_required
 def assign_role(request, user_id):
 
-    # Superuser OR Manager
     allowed = (
         request.user.is_superuser
         or request.user.groups.filter(
@@ -276,11 +238,6 @@ def assign_role(request, user_id):
     )
 
 
-# =========================================================
-# CREATE GROUP
-# SUPERUSER ONLY
-# =========================================================
-
 @login_required
 def create_group(request):
 
@@ -325,11 +282,6 @@ def create_group(request):
     )
 
 
-# =========================================================
-# GROUP LIST
-# SUPERUSER + MANAGER
-# =========================================================
-
 @login_required
 def grouplist(request):
 
@@ -364,16 +316,12 @@ def grouplist(request):
     )
 
 
-# =========================================================
-# USER LIST
-# SUPERUSER ONLY
-# =========================================================
-
 @login_required
 def userlist(request):
 
-    # Superuser OR Manager can access
-    is_manager = request.user.groups.filter(name="Manager").exists()
+    is_manager = request.user.groups.filter(
+        name="Manager"
+    ).exists()
 
     if not request.user.is_superuser and not is_manager:
 
@@ -382,7 +330,9 @@ def userlist(request):
             "Only Superuser and Manager can view users."
         )
 
-        return redirect("home")
+        return redirect(
+            "home"
+        )
 
     users = User.objects.all()
 
@@ -394,10 +344,6 @@ def userlist(request):
         }
     )
 
-# =========================================================
-# ADMIN DASHBOARD
-# SUPERUSER ONLY
-# =========================================================
 
 @login_required
 def admindashboard(request):

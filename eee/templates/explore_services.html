@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Explore Services - BuildSync
+{% endblock title %}
+
+
+{% block content %}
+
+<section class="min-h-screen bg-gray-50 py-16">
+
+    <div class="max-w-7xl mx-auto px-6">
+
+        <!-- ================================================= -->
+        <!-- HEADER -->
+        <!-- ================================================= -->
+
+        <div class="text-center mb-14">
+
+            <span
+                class="inline-block px-4 py-2 rounded-full
+                       bg-blue-100 text-blue-700
+                       text-sm font-semibold mb-4">
+                BuildSync Services
+            </span>
+
+            <h1
+                class="text-4xl md:text-5xl font-bold
+                       text-gray-900 mb-5">
+
+                Explore Our Services
+
+            </h1>
+
+            <p
+                class="max-w-2xl mx-auto
+                       text-gray-600 text-lg">
+
+                Discover the professional services available
+                through BuildSync for your construction,
+                electrical and maintenance needs.
+
+            </p>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- SERVICES -->
+        <!-- ================================================= -->
+
+        <div
+            class="grid grid-cols-1 sm:grid-cols-2
+                   lg:grid-cols-3 gap-7">
+
+            {% for service in services %}
+
+            <div
+                class="bg-white rounded-2xl
+                       border border-gray-200
+                       p-7
+                       shadow-sm
+                       hover:shadow-xl
+                       hover:-translate-y-1
+                       transition duration-300">
+
+                <!-- ICON -->
+
+                <div
+                    class="w-16 h-16
+                           rounded-2xl
+                           bg-blue-50
+                           flex items-center justify-center
+                           text-3xl
+                           mb-6">
+
+                    {{ service.icon }}
+
+                </div>
+
+
+                <!-- TITLE -->
+
+                <h2
+                    class="text-xl font-bold
+                           text-gray-900 mb-3">
+
+                    {{ service.title }}
+
+                </h2>
+
+
+                <!-- DESCRIPTION -->
+
+                <p
+                    class="text-gray-600
+                           leading-relaxed">
+
+                    {{ service.description }}
+
+                </p>
+
+            </div>
+
+            {% empty %}
+
+            <div class="col-span-full text-center">
+
+                <p class="text-gray-500 text-lg">
+                    No services are currently available.
+                </p>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- BACK BUTTON -->
+        <!-- ================================================= -->
+
+        <div class="text-center mt-14">
+
+            <a
+                href="{% url 'userdashboard' %}"
+                class="inline-flex items-center gap-2
+                       px-6 py-3
+                       rounded-xl
+                       bg-gray-900
+                       text-white
+                       font-semibold
+                       hover:bg-gray-800
+                       transition">
+
+                ← Back to Dashboard
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock content %}

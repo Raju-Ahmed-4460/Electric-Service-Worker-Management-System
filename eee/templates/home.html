@@ -1,21 +1,19 @@
 {% extends "base.html" %}
 {% load static %}
 
-
 {% block title %}
-Home - BuildSync
+Dashboard - BuildSync
 {% endblock title %}
 
 
 {% block content %}
 
 
+<!-- ===================================================== -->
 <!-- HERO -->
+<!-- ===================================================== -->
 
 <section class="relative h-[55vh] overflow-hidden">
-
-
-    <!-- Background Image -->
 
     <img
         src="{% static 'image/b1.jpeg' %}"
@@ -23,33 +21,28 @@ Home - BuildSync
         alt="BuildSync"
     >
 
-
-    <!-- Dark Overlay -->
-
     <div class="absolute inset-0 bg-black/60"></div>
 
-
-    <!-- Hero Content -->
-
-    <div
-        class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white"
-    >
-
+    <div class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-4">
 
         <p class="text-orange-400 text-lg font-semibold mb-2">
             BUILDSYNC
         </p>
 
-
-        <h1 class="text-5xl font-bold mb-4">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">
             Welcome Back, {{ request.user.username }}
         </h1>
 
-
-        <p class="text-xl text-gray-200">
+        <p class="text-lg md:text-xl text-gray-200">
             Manage your construction work and projects easily.
         </p>
 
+        <a
+            href="{% url 'my_tasks' %}"
+            class="mt-6 bg-orange-500 hover:bg-orange-600 px-6 py-3 rounded-xl font-semibold transition shadow-lg"
+        >
+            View My Tasks
+        </a>
 
     </div>
 
@@ -57,92 +50,742 @@ Home - BuildSync
 
 
 
-<!-- DASHBOARD SUMMARY -->
+<!-- ===================================================== -->
+<!-- DASHBOARD -->
+<!-- ===================================================== -->
 
-<section class="py-12 px-10">
-
+<section class="py-12 px-4 md:px-10 bg-gray-100">
 
     <div class="max-w-6xl mx-auto">
 
 
-        <h2 class="text-3xl font-bold text-gray-800 mb-8">
+        <h2 class="text-3xl font-bold text-gray-800 mb-2">
             My Dashboard
         </h2>
 
+        <p class="text-gray-500 mb-8">
+            Your current work overview
+        </p>
 
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <!-- ================================================= -->
+        <!-- SUMMARY CARDS -->
+        <!-- ================================================= -->
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+
+            <!-- ASSIGNED WORK -->
+
+            <div class="bg-white rounded-2xl shadow-md p-6 border-l-4 border-orange-500">
+
+                <p class="text-gray-500">
+                    Assigned Works
+                </p>
+
+                <h3 class="text-4xl font-bold text-orange-500 mt-2">
+                    {{ assigned_works.count }}
+                </h3>
+
+                <p class="text-sm text-gray-400 mt-2">
+                    Directly assigned by manager
+                </p>
+
+            </div>
 
 
 
-            <!-- ACTIVE TASKS -->
+            <!-- ACTIVE TASK -->
 
-            <div class="bg-white rounded-2xl shadow-md p-6">
+            <div class="bg-white rounded-2xl shadow-md p-6 border-l-4 border-blue-500">
 
                 <p class="text-gray-500">
                     Active Tasks
                 </p>
 
-
-                <h3 class="text-3xl font-bold text-orange-500 mt-2">
+                <h3 class="text-4xl font-bold text-blue-500 mt-2">
                     {{ active_tasks.count }}
                 </h3>
 
+                <p class="text-sm text-gray-400 mt-2">
+                    Currently working
+                </p>
+
             </div>
 
 
 
-            <!-- COMPLETED TASKS -->
+            <!-- COMPLETED -->
 
-            <div class="bg-white rounded-2xl shadow-md p-6">
+            <div class="bg-white rounded-2xl shadow-md p-6 border-l-4 border-green-500">
 
                 <p class="text-gray-500">
-                    Completed
+                    Completed Tasks
                 </p>
 
-
-                <h3 class="text-3xl font-bold text-green-500 mt-2">
+                <h3 class="text-4xl font-bold text-green-500 mt-2">
                     {{ completed_tasks.count }}
                 </h3>
 
-            </div>
-
-
-
-            <!-- MY PROJECTS -->
-
-            <div class="bg-white rounded-2xl shadow-md p-6">
-
-                <p class="text-gray-500">
-                    My Projects
+                <p class="text-sm text-gray-400 mt-2">
+                    Successfully completed
                 </p>
 
-
-                <h3 class="text-3xl font-bold text-blue-500 mt-2">
-                    {{ projects.count }}
-                </h3>
-
             </div>
 
 
 
-            <!-- PENDING TASKS -->
+            <!-- PENDING -->
 
-            <div class="bg-white rounded-2xl shadow-md p-6">
+            <div class="bg-white rounded-2xl shadow-md p-6 border-l-4 border-red-500">
 
                 <p class="text-gray-500">
                     Pending Tasks
                 </p>
 
-
-                <h3 class="text-3xl font-bold text-red-500 mt-2">
+                <h3 class="text-4xl font-bold text-red-500 mt-2">
                     {{ pending_tasks.count }}
                 </h3>
+
+                <p class="text-sm text-gray-400 mt-2">
+                    Waiting for approval
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================================================= -->
+        <!-- MY ASSIGNED WORK -->
+        <!-- ================================================= -->
+
+        <div class="bg-white rounded-2xl shadow-md p-6 mt-8">
+
+            <div class="flex items-center justify-between mb-6">
+
+                <div>
+
+                    <h2 class="text-2xl font-bold text-gray-800">
+                        My Assigned Work
+                    </h2>
+
+                    <p class="text-gray-500 text-sm">
+                        Work directly assigned to you
+                    </p>
+
+                </div>
+
+                <span class="bg-orange-100 text-orange-600 px-4 py-2 rounded-xl font-bold">
+                    {{ assigned_works.count }}
+                </span>
 
             </div>
 
 
+            {% if assigned_works %}
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+                    {% for work in assigned_works %}
+
+                        <div class="border border-gray-200 rounded-2xl p-5 hover:shadow-lg transition duration-300">
+
+                            <!-- TITLE -->
+
+                            <div class="flex justify-between items-start">
+
+                                <div>
+
+                                    <h3 class="text-xl font-bold text-gray-800">
+                                        {{ work.work_title }}
+                                    </h3>
+
+                                    <p class="text-sm text-gray-500 mt-1">
+                                        Assigned by:
+                                        {{ work.assigned_by.username }}
+                                    </p>
+
+                                </div>
+
+                                <div class="text-2xl">
+                                    🔨
+                                </div>
+
+                            </div>
+
+
+                            <!-- DESCRIPTION -->
+
+                            <div class="mt-4">
+
+                                <p class="text-sm font-semibold text-gray-600">
+                                    Description
+                                </p>
+
+                                <p class="text-gray-600 mt-1">
+                                    {{ work.description|default:"No description provided." }}
+                                </p>
+
+                            </div>
+
+
+                            <!-- LOCATION -->
+
+                            <div class="mt-4">
+
+                                <p class="text-sm font-semibold text-gray-600">
+                                    Location
+                                </p>
+
+                                <p class="text-gray-600 mt-1">
+                                    📍 {{ work.location|default:"Location not specified" }}
+                                </p>
+
+                            </div>
+
+
+                            <!-- DATE -->
+
+                            <div class="mt-4 pt-3 border-t">
+
+                                <p class="text-xs text-gray-400">
+                                    Assigned At:
+                                    {{ work.assigned_at|date:"d M Y, h:i A" }}
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="bg-gray-50 rounded-xl p-6 text-center">
+
+                    <p class="text-gray-500">
+                        No work has been assigned to you yet.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
         </div>
+
+
+
+        <!-- ================================================= -->
+        <!-- MY PROJECTS -->
+        <!-- ================================================= -->
+
+        <div class="bg-white rounded-2xl shadow-md p-6 mt-8">
+
+            <div class="flex items-center justify-between mb-6">
+
+                <div>
+
+                    <h2 class="text-2xl font-bold text-gray-800">
+                        My Projects
+                    </h2>
+
+                    <p class="text-gray-500 text-sm">
+                        Projects connected to your tasks
+                    </p>
+
+                </div>
+
+                <span class="bg-purple-100 text-purple-600 px-4 py-2 rounded-xl font-bold">
+                    {{ user_projects.count }}
+                </span>
+
+            </div>
+
+
+            {% if user_projects %}
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+                    {% for project in user_projects %}
+
+                        <div class="border border-gray-200 rounded-2xl p-5 hover:shadow-lg transition duration-300">
+
+                            <!-- PROJECT NAME -->
+
+                            <div class="flex justify-between items-start">
+
+                                <h3 class="text-xl font-bold text-gray-800">
+                                    {{ project.name }}
+                                </h3>
+
+                                <span class="text-2xl">
+                                    🏗️
+                                </span>
+
+                            </div>
+
+
+                            <!-- DESCRIPTION -->
+
+                            {% if project.description %}
+
+                                <p class="text-gray-600 text-sm mt-3">
+                                    {{ project.description }}
+                                </p>
+
+                            {% else %}
+
+                                <p class="text-gray-400 text-sm mt-3">
+                                    No project description available.
+                                </p>
+
+                            {% endif %}
+
+
+                            <!-- STATUS -->
+
+                            {% if project.status %}
+
+                                <div class="mt-4">
+
+                                    <span class="inline-block bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-semibold">
+
+                                        {{ project.status }}
+
+                                    </span>
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <!-- CREATED DATE -->
+
+                            {% if project.created_at %}
+
+                                <p class="text-xs text-gray-400 mt-4">
+
+                                    Created:
+                                    {{ project.created_at|date:"d M Y" }}
+
+                                </p>
+
+                            {% endif %}
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="bg-gray-50 rounded-xl p-6 text-center">
+
+                    <p class="text-gray-500">
+                        No projects connected to your tasks yet.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+
+        <!-- ================================================= -->
+        <!-- AVAILABLE TASKS -->
+        <!-- ================================================= -->
+
+        <div class="bg-white rounded-2xl shadow-md p-6 mt-8">
+
+            <div class="flex items-center justify-between mb-6">
+
+                <div>
+
+                    <h2 class="text-2xl font-bold text-gray-800">
+                        Available Tasks
+                    </h2>
+
+                    <p class="text-gray-500 text-sm">
+                        Tasks currently available for you
+                    </p>
+
+                </div>
+
+                <span class="bg-blue-100 text-blue-600 px-4 py-2 rounded-xl font-bold">
+                    {{ tasks.count }}
+                </span>
+
+            </div>
+
+
+            {% if tasks %}
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+                    {% for task in tasks %}
+
+                        <div class="border border-gray-200 rounded-2xl p-5 hover:shadow-lg transition duration-300">
+
+
+                            <!-- TASK TITLE -->
+
+                            <div class="flex justify-between items-start">
+
+                                <h3 class="text-xl font-bold text-gray-800">
+                                    {{ task.title }}
+                                </h3>
+
+                                <span class="text-2xl">
+                                    📋
+                                </span>
+
+                            </div>
+
+
+                            <!-- PROJECT -->
+
+                            {% if task.project %}
+
+                                <p class="text-sm text-gray-500 mt-3">
+
+                                    <strong>
+                                        Project:
+                                    </strong>
+
+                                    {{ task.project.name }}
+
+                                </p>
+
+                            {% endif %}
+
+
+                            <!-- TASK DESCRIPTION -->
+
+                            {% if task.description %}
+
+                                <p class="text-gray-600 text-sm mt-3">
+                                    {{ task.description }}
+                                </p>
+
+                            {% else %}
+
+                                <p class="text-gray-400 text-sm mt-3">
+                                    No task description available.
+                                </p>
+
+                            {% endif %}
+
+
+                            <!-- STATUS -->
+
+                            <div class="mt-4">
+
+                                <span class="inline-block bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold">
+
+                                    {{ task.status }}
+
+                                </span>
+
+                            </div>
+
+
+                            <!-- APPLY BUTTON -->
+
+                            <div class="mt-5">
+
+                                {% if task.id in applied_task_ids %}
+
+                                    <button
+                                        disabled
+                                        class="w-full bg-gray-300 text-gray-600 px-4 py-2 rounded-lg cursor-not-allowed"
+                                    >
+                                        Already Applied
+                                    </button>
+
+                                {% else %}
+
+                                    <form
+                                        method="POST"
+                                        action="{% url 'apply_task' task.id %}"
+                                    >
+
+                                        {% csrf_token %}
+
+                                        <button
+                                            type="submit"
+                                            class="w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition"
+                                        >
+                                            Apply for Task
+                                        </button>
+
+                                    </form>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="bg-gray-50 rounded-xl p-6 text-center">
+
+                    <p class="text-gray-500">
+                        No available tasks right now.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+
+        <!-- ================================================= -->
+        <!-- ACTIVE TASKS -->
+        <!-- ================================================= -->
+
+        <div class="bg-white rounded-2xl shadow-md p-6 mt-8">
+
+            <div class="flex items-center justify-between mb-6">
+
+                <div>
+
+                    <h2 class="text-2xl font-bold text-gray-800">
+                        Active Tasks
+                    </h2>
+
+                    <p class="text-gray-500 text-sm">
+                        Tasks you are currently working on
+                    </p>
+
+                </div>
+
+                <span class="bg-blue-100 text-blue-600 px-4 py-2 rounded-xl font-bold">
+                    {{ active_tasks.count }}
+                </span>
+
+            </div>
+
+
+            {% if active_tasks %}
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+                    {% for application in active_tasks %}
+
+                        <div class="border border-blue-200 rounded-2xl p-5">
+
+                            <h3 class="text-xl font-bold text-gray-800">
+                                {{ application.task.title }}
+                            </h3>
+
+                            {% if application.task.project %}
+
+                                <p class="text-sm text-gray-500 mt-2">
+
+                                    Project:
+                                    {{ application.task.project.name }}
+
+                                </p>
+
+                            {% endif %}
+
+                            <span class="inline-block mt-4 bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold">
+
+                                Active
+
+                            </span>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="bg-gray-50 rounded-xl p-6 text-center">
+
+                    <p class="text-gray-500">
+                        You have no active tasks.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+
+        <!-- ================================================= -->
+        <!-- COMPLETED TASKS -->
+        <!-- ================================================= -->
+
+        <div class="bg-white rounded-2xl shadow-md p-6 mt-8">
+
+            <div class="flex items-center justify-between mb-6">
+
+                <div>
+
+                    <h2 class="text-2xl font-bold text-gray-800">
+                        Completed Tasks
+                    </h2>
+
+                    <p class="text-gray-500 text-sm">
+                        Tasks you have completed
+                    </p>
+
+                </div>
+
+                <span class="bg-green-100 text-green-600 px-4 py-2 rounded-xl font-bold">
+                    {{ completed_tasks.count }}
+                </span>
+
+            </div>
+
+
+            {% if completed_tasks %}
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+                    {% for application in completed_tasks %}
+
+                        <div class="border border-green-200 rounded-2xl p-5">
+
+                            <h3 class="text-xl font-bold text-gray-800">
+                                {{ application.task.title }}
+                            </h3>
+
+                            {% if application.task.project %}
+
+                                <p class="text-sm text-gray-500 mt-2">
+
+                                    Project:
+                                    {{ application.task.project.name }}
+
+                                </p>
+
+                            {% endif %}
+
+                            <span class="inline-block mt-4 bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold">
+
+                                Completed
+
+                            </span>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="bg-gray-50 rounded-xl p-6 text-center">
+
+                    <p class="text-gray-500">
+                        No completed tasks yet.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+
+        <!-- ================================================= -->
+        <!-- PENDING TASKS -->
+        <!-- ================================================= -->
+
+        <div class="bg-white rounded-2xl shadow-md p-6 mt-8">
+
+            <div class="flex items-center justify-between mb-6">
+
+                <div>
+
+                    <h2 class="text-2xl font-bold text-gray-800">
+                        Pending Tasks
+                    </h2>
+
+                    <p class="text-gray-500 text-sm">
+                        Tasks waiting for approval
+                    </p>
+
+                </div>
+
+                <span class="bg-red-100 text-red-600 px-4 py-2 rounded-xl font-bold">
+                    {{ pending_tasks.count }}
+                </span>
+
+            </div>
+
+
+            {% if pending_tasks %}
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+                    {% for application in pending_tasks %}
+
+                        <div class="border border-red-200 rounded-2xl p-5">
+
+                            <h3 class="text-xl font-bold text-gray-800">
+                                {{ application.task.title }}
+                            </h3>
+
+                            {% if application.task.project %}
+
+                                <p class="text-sm text-gray-500 mt-2">
+
+                                    Project:
+                                    {{ application.task.project.name }}
+
+                                </p>
+
+                            {% endif %}
+
+                            <span class="inline-block mt-4 bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs font-semibold">
+
+                                Pending
+
+                            </span>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="bg-gray-50 rounded-xl p-6 text-center">
+
+                    <p class="text-gray-500">
+                        No pending tasks.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
 
     </div>
 

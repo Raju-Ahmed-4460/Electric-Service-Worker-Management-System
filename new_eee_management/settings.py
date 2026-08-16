@@ -31,7 +31,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "user",
-    "core",
     "eee",
 ]
 
@@ -145,3 +144,5 @@ STATICFILES_DIRS=[
 ]
 
 AUTH_USER_MODEL = "user.User"
+
+LOGIN_URL = "login"

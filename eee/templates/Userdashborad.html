@@ -1,89 +1,256 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="{% static 'css/output.css' %}">
-    <link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>BuildSync Dashboard</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/output.css' %}"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
 </head>
+
 
 <body class="bg-slate-300">
 
+
+<!-- ===================================================== -->
 <!-- NAVBAR -->
+<!-- ===================================================== -->
+
 <nav class="fixed top-0 left-0 w-full z-50 bg-orange-300">
-    <div class="flex justify-between items-center p-4">
 
-        <!-- Left -->
-        <div class="flex gap-4 items-center ml-32">
-            <img src="{% static 'image/logo-circle.webp' %}"
-     alt=""
-     class="h-10 w-10 cursor-pointer rounded-full hover:scale-105 transition">
+    <div
+        class="flex justify-between items-center p-4"
+    >
 
-            <a href="{% url 'home' %}" class="cursor-pointer hover:bg-orange-500 hover:text-white px-3 py-1 rounded-full transition">
-    Home
-</a>
-                
-        
+
+        <!-- ================================================= -->
+        <!-- LEFT -->
+        <!-- ================================================= -->
+
+        <div
+            class="flex gap-4 items-center ml-32"
+        >
+
+            <!-- LOGO -->
+
+            <a href="{% url 'home' %}">
+
+                <img
+                    src="{% static 'image/logo-circle.webp' %}"
+                    alt="BuildSync Logo"
+                    class="h-10 w-10 cursor-pointer rounded-full
+                           hover:scale-105 transition"
+                >
+
+            </a>
+
+
+            <!-- HOME -->
+
+            <a
+                href="{% url 'home' %}"
+                class="cursor-pointer
+                       hover:bg-orange-500
+                       hover:text-white
+                       px-3 py-1
+                       rounded-full
+                       transition"
+            >
+
+                Home
+
+            </a>
+
         </div>
 
-        <!-- Right -->
-         
-        <div class="flex gap-5 items-center mr-32">
 
-            <a href="#"
-   class="cursor-pointer hover:bg-orange-500 hover:text-white px-3 py-2 rounded-full transition">
-    <i class="fa-solid fa-bell text-xl"></i>
-</a>
 
-            <a href="{% url "creategroup" %}" class="cursor-pointer hover:bg-orange-500 hover:text-white px-3 py-1 rounded-full transition">
-                Explore
-                </a>
-        
+        <!-- ================================================= -->
+        <!-- RIGHT -->
+        <!-- ================================================= -->
 
-            <a href="{% url "login" %}"  class="cursor-pointer hover:bg-orange-500 hover:text-white px-3 py-1 rounded-full transition">
-                Login
-                </a>
-            
+        <div
+            class="flex gap-5 items-center mr-32"
+        >
 
-            
 
-            <a href="{% url "registration" %}" class="cursor-pointer hover:bg-orange-500 hover:text-white px-3 py-1 rounded-full transition">
-                Sign-Up
+            <!-- NOTIFICATION -->
+
+            <a
+                href="#"
+                class="cursor-pointer
+                       hover:bg-orange-500
+                       hover:text-white
+                       px-3 py-2
+                       rounded-full
+                       transition"
+                title="Notifications"
+            >
+
+                <i class="fa-solid fa-bell text-xl"></i>
+
             </a>
+
+
+
+            <!-- ================================================= -->
+            <!-- EXPLORE -->
+            <!-- ================================================= -->
+
+            <a
+                href="{% url 'explore_services' %}"
+                class="cursor-pointer
+                       hover:bg-orange-500
+                       hover:text-white
+                       px-3 py-1
+                       rounded-full
+                       transition"
+            >
+
+                Explore
+
+            </a>
+
+
+
+            <!-- ================================================= -->
+            <!-- LOGIN -->
+            <!-- ================================================= -->
+
+            <a
+                href="{% url 'login' %}"
+                class="cursor-pointer
+                       hover:bg-orange-500
+                       hover:text-white
+                       px-3 py-1
+                       rounded-full
+                       transition"
+            >
+
+                Login
+
+            </a>
+
+
+
+            <!-- ================================================= -->
+            <!-- SIGN UP -->
+            <!-- ================================================= -->
+
+            <a
+                href="{% url 'registration' %}"
+                class="cursor-pointer
+                       hover:bg-orange-500
+                       hover:text-white
+                       px-3 py-1
+                       rounded-full
+                       transition"
+            >
+
+                Sign-Up
+
+            </a>
+
         </div>
 
     </div>
+
 </nav>
 
 
 
-    <!-- HERO SECTION  -->
-<section class="relative h-[90vh] overflow-hidden">
+<!-- ===================================================== -->
+<!-- HERO SECTION -->
+<!-- ===================================================== -->
 
-    <!-- Background Image -->
-    <img src="{% static 'image/b1.jpeg' %}"
-         class="absolute inset-0 w-full h-full object-cover blur-sm scale-105">
+<section
+    class="relative h-[90vh] overflow-hidden"
+>
 
-    <!-- Dark Overlay -->
-    <div class="absolute inset-0 bg-black/50"></div>
 
-    <!-- Content -->
-    <div class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white">
+    <!-- BACKGROUND IMAGE -->
 
-        <h1 class="text-6xl font-bold mb-4">
+    <img
+        src="{% static 'image/b1.jpeg' %}"
+        alt="BuildSync"
+        class="absolute inset-0
+               w-full h-full
+               object-cover
+               blur-sm
+               scale-105"
+    >
+
+
+    <!-- DARK OVERLAY -->
+
+    <div
+        class="absolute inset-0 bg-black/50"
+    ></div>
+
+
+    <!-- HERO CONTENT -->
+
+    <div
+        class="relative z-10
+               flex flex-col
+               items-center
+               justify-center
+               h-full
+               text-center
+               text-white"
+    >
+
+        <h1
+            class="text-6xl font-bold mb-4"
+        >
+
             Welcome to BuildSync
+
         </h1>
 
-        <p class="text-2xl mb-6"> 
+
+        <p
+            class="text-2xl mb-6"
+        >
+
             Manage Construction Projects Efficiently
+
         </p>
 
-        <button class="bg-orange-500 hover:bg-orange-600 px-6 py-3 rounded-lg font-semibold transition">
+
+        <!-- GET STARTED -->
+
+        <a
+            href="{% url 'explore_services' %}"
+            class="bg-orange-500
+                   hover:bg-orange-600
+                   px-6 py-3
+                   rounded-lg
+                   font-semibold
+                   transition"
+        >
+
             Get Started
-        </button>
+
+        </a>
 
     </div>
 
@@ -91,46 +258,224 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
 
 
+<!-- ===================================================== -->
+<!-- OUR SERVICES -->
+<!-- ===================================================== -->
 
-<!-- Our Services Section -->
-<section class="py-16 bg-slate-100">
+<section
+    class="py-16 bg-slate-100"
+>
 
-    <div class="text-center mb-10">
-        <h2 class="text-4xl font-bold text-gray-800">
+
+    <!-- HEADER -->
+
+    <div
+        class="text-center mb-10"
+    >
+
+        <h2
+            class="text-4xl font-bold text-gray-800"
+        >
+
             Our Services
+
         </h2>
-        <p class="text-gray-500 mt-2">
+
+
+        <p
+            class="text-gray-500 mt-2"
+        >
+
             What we provide for your construction needs
+
         </p>
+
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 px-10">
 
-        <div class="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-xl transition">
-            <h3 class="text-xl font-semibold mb-2">Project Management</h3>
-            <p class="text-gray-600">Manage all construction projects efficiently.</p>
+
+    <!-- SERVICE CARDS -->
+
+    <div
+        class="grid
+               grid-cols-1
+               md:grid-cols-3
+               gap-8
+               px-10"
+    >
+
+
+        <!-- ================================================= -->
+        <!-- PROJECT MANAGEMENT -->
+        <!-- ================================================= -->
+
+        <div
+            class="bg-white
+                   p-6
+                   rounded-lg
+                   shadow-md
+                   text-center
+                   hover:shadow-xl
+                   transition"
+        >
+
+            <div
+                class="text-orange-500 text-4xl mb-4"
+            >
+
+                <i class="fa-solid fa-list-check"></i>
+
+            </div>
+
+
+            <h3
+                class="text-xl font-semibold mb-2"
+            >
+
+                Project Management
+
+            </h3>
+
+
+            <p
+                class="text-gray-600"
+            >
+
+                Manage all construction projects efficiently.
+
+            </p>
+
         </div>
 
-        <div class="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-xl transition">
-            <h3 class="text-xl font-semibold mb-2">Worker Allocation</h3>
-            <p class="text-gray-600">Assign workers and helpers easily.</p>
+
+
+        <!-- ================================================= -->
+        <!-- WORKER ALLOCATION -->
+        <!-- ================================================= -->
+
+        <div
+            class="bg-white
+                   p-6
+                   rounded-lg
+                   shadow-md
+                   text-center
+                   hover:shadow-xl
+                   transition"
+        >
+
+            <div
+                class="text-orange-500 text-4xl mb-4"
+            >
+
+                <i class="fa-solid fa-people-group"></i>
+
+            </div>
+
+
+            <h3
+                class="text-xl font-semibold mb-2"
+            >
+
+                Worker Allocation
+
+            </h3>
+
+
+            <p
+                class="text-gray-600"
+            >
+
+                Assign workers and helpers easily.
+
+            </p>
+
         </div>
 
-        <div class="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-xl transition">
-            <h3 class="text-xl font-semibold mb-2">Real-time Updates</h3>
-            <p class="text-gray-600">Get live updates of ongoing work.</p>
+
+
+        <!-- ================================================= -->
+        <!-- REAL TIME UPDATES -->
+        <!-- ================================================= -->
+
+        <div
+            class="bg-white
+                   p-6
+                   rounded-lg
+                   shadow-md
+                   text-center
+                   hover:shadow-xl
+                   transition"
+        >
+
+            <div
+                class="text-orange-500 text-4xl mb-4"
+            >
+
+                <i class="fa-solid fa-chart-line"></i>
+
+            </div>
+
+
+            <h3
+                class="text-xl font-semibold mb-2"
+            >
+
+                Real-time Updates
+
+            </h3>
+
+
+            <p
+                class="text-gray-600"
+            >
+
+                Get live updates of ongoing work.
+
+            </p>
+
         </div>
+
+    </div>
+
+
+
+    <!-- ================================================= -->
+    <!-- EXPLORE ALL SERVICES BUTTON -->
+    <!-- ================================================= -->
+
+    <div class="text-center mt-10">
+
+        <a
+            href="{% url 'explore_services' %}"
+            class="inline-block
+                   bg-orange-500
+                   hover:bg-orange-600
+                   text-white
+                   font-semibold
+                   px-7 py-3
+                   rounded-lg
+                   transition"
+        >
+
+            Explore All Services
+
+            <i class="fa-solid fa-arrow-right ml-2"></i>
+
+        </a>
 
     </div>
 
 </section>
 
+
+
+<!-- ===================================================== -->
+<!-- FOOTER -->
+<!-- ===================================================== -->
 
 {% include "footer.html" %}
 
+
 </body>
+
 </html>
-
-
-
-

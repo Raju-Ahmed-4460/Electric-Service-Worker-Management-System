@@ -176,3 +176,44 @@ class TaskApplication(models.Model):
                 name="unique_task_user_application"
             )
         ]
+
+
+# =========================================================
+# WORK ASSIGNMENT
+# =========================================================
+
+class WorkAssignment(models.Model):
+
+    worker = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="work_assignments"
+    )
+
+    assigned_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="assigned_works"
+    )
+
+    work_title = models.CharField(
+        max_length=255
+    )
+
+    description = models.TextField(
+        blank=True
+    )
+
+    location = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    assigned_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    def __str__(self):
+        return f"{self.work_title} - {self.worker.username}"

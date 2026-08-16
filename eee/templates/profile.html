@@ -1,70 +1,362 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>My Profile</title>
 
 
-{% extends "base.html" %}
+    <style>
 
-{% block title %}Profile - BuildSync{% endblock %}
+        * {
+            box-sizing: border-box;
+        }
 
-{% block content %}
+        body {
 
-<section class="py-12 px-10">
+            font-family: Arial, sans-serif;
 
-```
-<div class="max-w-3xl mx-auto">
+            background: #f5f5f5;
 
-    <div class="bg-white rounded-2xl shadow-md p-8">
+            margin: 0;
 
-        <h1 class="text-3xl font-bold text-gray-800 mb-8">
-            My Profile
-        </h1>
-
-
-        <div class="space-y-5">
-
-            <div>
-
-                <p class="text-sm text-gray-500">
-                    Username
-                </p>
-
-                <p class="text-lg font-semibold">
-                    {{ request.user.username }}
-                </p>
-
-            </div>
+            padding: 30px;
+        }
 
 
-            <div>
+        .container {
 
-                <p class="text-sm text-gray-500">
-                    Email
-                </p>
+            max-width: 900px;
 
-                <p class="text-lg font-semibold">
-                    {{ request.user.email }}
-                </p>
-
-            </div>
+            margin: auto;
+        }
 
 
-            <div>
+        /* =========================
+           TOP BAR
+        ========================= */
 
-                <p class="text-sm text-gray-500">
-                    First Name
-                </p>
+        .top-bar {
 
-                <p class="text-lg font-semibold">
-                    {{ request.user.first_name }}
-                </p>
+            margin-bottom: 20px;
+        }
 
-            </div>
 
-        </div>
+        .dashboard-btn {
+
+            display: inline-block;
+
+            padding: 12px 20px;
+
+            background: #2563eb;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+
+        .dashboard-btn:hover {
+
+            background: #1d4ed8;
+        }
+
+
+        /* =========================
+           CARD
+        ========================= */
+
+        .card {
+
+            background: white;
+
+            padding: 25px;
+
+            margin-bottom: 25px;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 2px 10px
+                rgba(0, 0, 0, 0.08);
+        }
+
+
+        h2 {
+
+            margin-top: 0;
+
+            margin-bottom: 20px;
+
+            color: #222;
+        }
+
+
+        .info {
+
+            margin: 12px 0;
+
+            color: #444;
+        }
+
+
+        .label {
+
+            font-weight: bold;
+
+            color: #222;
+        }
+
+
+        /* =========================
+           WORK APPLICATION
+        ========================= */
+
+        .work {
+
+            border: 1px solid #ddd;
+
+            padding: 18px;
+
+            margin-top: 15px;
+
+            border-radius: 8px;
+
+            background: #fafafa;
+        }
+
+
+        .work:first-child {
+
+            margin-top: 0;
+        }
+
+
+        .status {
+
+            font-weight: bold;
+        }
+
+
+        /* =========================
+           EMPTY MESSAGE
+        ========================= */
+
+        .empty {
+
+            color: #777;
+
+            margin: 0;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- =========================================
+         DASHBOARD BUTTON
+    ========================================== -->
+
+    <div class="top-bar">
+
+        <a
+            href="{% url dashboard_url %}"
+            class="dashboard-btn"
+        >
+            ← Back to Dashboard
+        </a>
 
     </div>
 
+
+    <!-- =========================================
+         REGISTRATION / PROFILE INFORMATION
+    ========================================== -->
+
+    <div class="card">
+
+        <h2>My Profile</h2>
+
+
+        <div class="info">
+
+            <span class="label">
+                Username:
+            </span>
+
+            {{ user.username }}
+
+        </div>
+
+
+        <div class="info">
+
+            <span class="label">
+                First Name:
+            </span>
+
+            {{ user.first_name }}
+
+        </div>
+
+
+        <div class="info">
+
+            <span class="label">
+                Last Name:
+            </span>
+
+            {{ user.last_name }}
+
+        </div>
+
+
+        <div class="info">
+
+            <span class="label">
+                Email:
+            </span>
+
+            {{ user.email }}
+
+        </div>
+
+
+        {% if user.phone %}
+
+        <div class="info">
+
+            <span class="label">
+                Phone:
+            </span>
+
+            {{ user.phone }}
+
+        </div>
+
+        {% endif %}
+
+
+        {% if user.address %}
+
+        <div class="info">
+
+            <span class="label">
+                Address:
+            </span>
+
+            {{ user.address }}
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- =========================================
+         APPLY FOR WORK INFORMATION
+    ========================================== -->
+
+    <div class="card">
+
+        <h2>
+            My Applied Works
+        </h2>
+
+
+        {% if work_applications %}
+
+
+            {% for application in work_applications %}
+
+                <div class="work">
+
+
+                    <div class="info">
+
+                        <span class="label">
+                            Work Type:
+                        </span>
+
+                        {{ application.work_type }}
+
+                    </div>
+
+
+                    {% if application.description %}
+
+                    <div class="info">
+
+                        <span class="label">
+                            Description:
+                        </span>
+
+                        {{ application.description }}
+
+                    </div>
+
+                    {% endif %}
+
+
+                    <div class="info">
+
+                        <span class="label">
+                            Status:
+                        </span>
+
+                        <span class="status">
+
+                            {{ application.status }}
+
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+            {% endfor %}
+
+
+        {% else %}
+
+            <p class="empty">
+
+                You have not applied for any work yet.
+
+            </p>
+
+        {% endif %}
+
+
+    </div>
+
+
 </div>
-```
 
-</section>
 
-{% endblock content %}
+</body>
+
+</html>
