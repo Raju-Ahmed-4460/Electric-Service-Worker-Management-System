@@ -78,8 +78,10 @@ WSGI_APPLICATION = "new_eee_management.wsgi.application"
 
 
 DATABASES = {
-    "default": dj_database_url.config(
-        default=config("DATABASE_URL")
+    'default': dj_database_url.config(
+        # Replace this value with your local database's connection string.
+        default='postgresql://buildsync_db_29zt_user:OP5D2TkiZgmYl0uP7qcXZ60QuF0Ut1r8@dpg-da1g021t0dsc73bpmjng-a.oregon-postgres.render.com/buildsync_db_29zt',
+        conn_max_age=600
     )
 }
 
