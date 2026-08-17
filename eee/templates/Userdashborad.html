@@ -14,10 +14,16 @@
 
     <title>BuildSync Dashboard</title>
 
+
+    <!-- Tailwind CSS -->
+
     <link
         rel="stylesheet"
         href="{% static 'css/output.css' %}"
     >
+
+
+    <!-- Font Awesome -->
 
     <link
         rel="stylesheet"
@@ -34,53 +40,102 @@
 <!-- NAVBAR -->
 <!-- ===================================================== -->
 
-<nav class="fixed top-0 left-0 w-full z-50 bg-orange-300">
+<nav
+    class="fixed
+           top-0
+           left-0
+           w-full
+           z-50
+           bg-orange-300"
+>
 
     <div
-        class="flex justify-between items-center
-               px-4 sm:px-6 lg:px-8
-               py-3 sm:py-4"
+        class="w-full
+               flex
+               items-center
+               justify-between
+               px-2
+               sm:px-4
+               md:px-8
+               lg:px-12
+               xl:px-20
+               py-3
+               lg:py-4"
     >
 
 
         <!-- ================================================= -->
-        <!-- LEFT -->
+        <!-- LEFT SIDE -->
         <!-- ================================================= -->
 
         <div
-            class="flex gap-2 sm:gap-4 items-center
-                   ml-0 lg:ml-32"
+            class="flex
+                   items-center
+                   gap-2
+                   sm:gap-3
+                   lg:gap-6
+                   xl:gap-8
+                   shrink-0"
         >
 
-            <!-- LOGO -->
 
-            <a href="{% url 'home' %}">
+            <!-- ================================================= -->
+            <!-- LOGO -->
+            <!-- ================================================= -->
+
+            <a
+                href="{% url 'home' %}"
+            >
 
                 <img
                     src="{% static 'image/logo-circle.webp' %}"
                     alt="BuildSync Logo"
-                    class="h-9 w-9 sm:h-10 sm:w-10
-                           cursor-pointer
+
+                    class="w-8
+                           h-8
+                           sm:w-9
+                           sm:h-9
+                           lg:w-10
+                           lg:h-10
+
                            rounded-full
+
+                           cursor-pointer
+
                            hover:scale-105
+
                            transition"
                 >
 
             </a>
 
 
+
+            <!-- ================================================= -->
             <!-- HOME -->
+            <!-- ================================================= -->
 
             <a
                 href="{% url 'home' %}"
-                class="cursor-pointer
+
+                class="px-1.5
+                       sm:px-3
+                       lg:px-4
+
+                       py-1.5
+
+                       rounded-full
+
                        hover:bg-orange-500
                        hover:text-white
-                       px-2 sm:px-3
-                       py-1
-                       rounded-full
+
                        transition
-                       text-sm sm:text-base"
+
+                       text-[11px]
+                       sm:text-sm
+                       lg:text-base
+
+                       whitespace-nowrap"
             >
 
                 Home
@@ -92,50 +147,93 @@
 
 
         <!-- ================================================= -->
-        <!-- RIGHT -->
+        <!-- RIGHT SIDE -->
         <!-- ================================================= -->
 
         <div
-            class="flex gap-1 sm:gap-3 lg:gap-5
+            class="flex
                    items-center
-                   mr-0 lg:mr-32"
+
+                   gap-0.5
+                   sm:gap-2
+                   md:gap-3
+                   lg:gap-5
+                   xl:gap-7
+
+                   shrink-0"
         >
 
 
+            <!-- ================================================= -->
             <!-- NOTIFICATION -->
+            <!-- ================================================= -->
 
             <a
                 href="#"
-                class="cursor-pointer
+                title="Notifications"
+
+                class="flex
+                       items-center
+                       justify-center
+
+                       w-8
+                       h-8
+
+                       sm:w-9
+                       sm:h-9
+
+                       lg:w-auto
+                       lg:h-auto
+
+                       lg:px-3
+                       lg:py-2
+
+                       rounded-full
+
                        hover:bg-orange-500
                        hover:text-white
-                       px-2 sm:px-3
-                       py-2
-                       rounded-full
+
                        transition"
-                title="Notifications"
             >
 
-                <i class="fa-solid fa-bell
-                          text-base sm:text-xl">
-                </i>
+                <i
+                    class="fa-solid
+                           fa-bell
+
+                           text-sm
+                           sm:text-base
+                           lg:text-xl"
+                ></i>
 
             </a>
 
 
 
+            <!-- ================================================= -->
             <!-- EXPLORE -->
+            <!-- ================================================= -->
 
             <a
                 href="{% url 'explore_services' %}"
-                class="cursor-pointer
+
+                class="px-1.5
+                       sm:px-3
+                       lg:px-4
+
+                       py-1.5
+
+                       rounded-full
+
                        hover:bg-orange-500
                        hover:text-white
-                       px-2 sm:px-3
-                       py-1
-                       rounded-full
+
                        transition
-                       text-sm sm:text-base"
+
+                       text-[11px]
+                       sm:text-sm
+                       lg:text-base
+
+                       whitespace-nowrap"
             >
 
                 Explore
@@ -144,18 +242,31 @@
 
 
 
+            <!-- ================================================= -->
             <!-- LOGIN -->
+            <!-- ================================================= -->
 
             <a
                 href="{% url 'login' %}"
-                class="cursor-pointer
+
+                class="px-1.5
+                       sm:px-3
+                       lg:px-4
+
+                       py-1.5
+
+                       rounded-full
+
                        hover:bg-orange-500
                        hover:text-white
-                       px-2 sm:px-3
-                       py-1
-                       rounded-full
+
                        transition
-                       text-sm sm:text-base"
+
+                       text-[11px]
+                       sm:text-sm
+                       lg:text-base
+
+                       whitespace-nowrap"
             >
 
                 Login
@@ -164,18 +275,31 @@
 
 
 
+            <!-- ================================================= -->
             <!-- SIGN UP -->
+            <!-- ================================================= -->
 
             <a
                 href="{% url 'registration' %}"
-                class="cursor-pointer
+
+                class="px-1.5
+                       sm:px-3
+                       lg:px-4
+
+                       py-1.5
+
+                       rounded-full
+
                        hover:bg-orange-500
                        hover:text-white
-                       px-2 sm:px-3
-                       py-1
-                       rounded-full
+
                        transition
-                       text-sm sm:text-base"
+
+                       text-[11px]
+                       sm:text-sm
+                       lg:text-base
+
+                       whitespace-nowrap"
             >
 
                 Sign-Up
@@ -196,57 +320,102 @@
 
 <section
     class="relative
-           min-h-[75vh]
-           sm:min-h-[80vh]
+
+           min-h-[85vh]
+
+           sm:min-h-[88vh]
+
            lg:h-[90vh]
-           overflow-hidden
-           pt-20"
+
+           overflow-hidden"
 >
 
 
+    <!-- ================================================= -->
     <!-- BACKGROUND IMAGE -->
+    <!-- ================================================= -->
 
     <img
         src="{% static 'image/b1.jpeg' %}"
+
         alt="BuildSync"
-        class="absolute inset-0
-               w-full h-full
+
+        class="absolute
+               inset-0
+
+               w-full
+               h-full
+
                object-cover
+
                blur-sm
+
                scale-105"
     >
 
 
+
+    <!-- ================================================= -->
     <!-- DARK OVERLAY -->
+    <!-- ================================================= -->
 
     <div
-        class="absolute inset-0 bg-black/50"
+        class="absolute
+               inset-0
+               bg-black/50"
     ></div>
 
 
 
+    <!-- ================================================= -->
     <!-- HERO CONTENT -->
+    <!-- ================================================= -->
 
     <div
-        class="relative z-10
-               flex flex-col
+        class="relative
+               z-10
+
+               flex
+               flex-col
+
                items-center
                justify-center
-               min-h-[75vh]
-               sm:min-h-[80vh]
+
+               min-h-[85vh]
+
+               sm:min-h-[88vh]
+
                lg:h-full
+
                text-center
                text-white
-               px-5 sm:px-8"
+
+               px-5
+               sm:px-8
+
+               pt-16
+               sm:pt-20"
     >
+
+
+        <!-- ================================================= -->
+        <!-- HERO TITLE -->
+        <!-- ================================================= -->
 
         <h1
             class="text-3xl
+
                    sm:text-5xl
+
                    lg:text-6xl
+
                    font-bold
+
+                   leading-tight
+
                    mb-4
-                   leading-tight"
+
+                   max-w-4xl"
         >
 
             Welcome to BuildSync
@@ -254,11 +423,22 @@
         </h1>
 
 
+
+        <!-- ================================================= -->
+        <!-- HERO DESCRIPTION -->
+        <!-- ================================================= -->
+
         <p
             class="text-base
+
                    sm:text-xl
+
                    lg:text-2xl
+
+                   leading-relaxed
+
                    mb-6
+
                    max-w-2xl"
         >
 
@@ -268,18 +448,37 @@
 
 
 
+        <!-- ================================================= -->
         <!-- GET STARTED -->
+        <!-- ================================================= -->
 
         <a
             href="{% url 'explore_services' %}"
-            class="bg-orange-500
+
+            class="inline-flex
+
+                   items-center
+                   justify-center
+
+                   bg-orange-500
+
                    hover:bg-orange-600
-                   px-5 sm:px-6
+
+                   px-5
+                   sm:px-6
+
                    py-3
+
                    rounded-lg
+
                    font-semibold
+
                    transition
-                   text-sm sm:text-base"
+
+                   text-sm
+                   sm:text-base
+
+                   shadow-lg"
         >
 
             Get Started
@@ -298,23 +497,36 @@
 
 <section
     class="py-12
+
            sm:py-16
+
+           lg:py-20
+
            bg-slate-100"
 >
 
 
-    <!-- HEADER -->
+    <!-- ================================================= -->
+    <!-- SERVICES HEADER -->
+    <!-- ================================================= -->
 
     <div
         class="text-center
-               mb-8 sm:mb-10
+
+               mb-8
+               sm:mb-10
+
                px-5"
     >
 
+
         <h2
             class="text-3xl
+
                    sm:text-4xl
+
                    font-bold
+
                    text-gray-800"
         >
 
@@ -323,10 +535,14 @@
         </h2>
 
 
+
         <p
             class="text-gray-500
+
                    mt-2
-                   text-sm sm:text-base"
+
+                   text-sm
+                   sm:text-base"
         >
 
             What we provide for your construction needs
@@ -337,17 +553,29 @@
 
 
 
+    <!-- ================================================= -->
     <!-- SERVICE CARDS -->
+    <!-- ================================================= -->
 
     <div
         class="grid
+
                grid-cols-1
+
                md:grid-cols-3
-               gap-6 sm:gap-8
-               px-5 sm:px-8 lg:px-10
+
+               gap-6
+               sm:gap-8
+
+               px-5
+               sm:px-8
+               lg:px-10
+
                max-w-7xl
+
                mx-auto"
     >
+
 
 
         <!-- ================================================= -->
@@ -356,28 +584,46 @@
 
         <div
             class="bg-white
-                   p-5 sm:p-6
+
+                   p-5
+                   sm:p-6
+
                    rounded-lg
+
                    shadow-md
+
                    text-center
+
                    hover:shadow-xl
+
                    transition"
         >
 
+
             <div
                 class="text-orange-500
+
                        text-4xl
+
                        mb-4"
             >
 
-                <i class="fa-solid fa-list-check"></i>
+                <i
+                    class="fa-solid
+                           fa-list-check"
+                ></i>
 
             </div>
 
 
+
             <h3
-                class="text-xl
+                class="text-lg
+
+                       sm:text-xl
+
                        font-semibold
+
                        mb-2"
             >
 
@@ -386,9 +632,12 @@
             </h3>
 
 
+
             <p
                 class="text-gray-600
-                       text-sm sm:text-base"
+
+                       text-sm
+                       sm:text-base"
             >
 
                 Manage all construction projects efficiently.
@@ -405,28 +654,46 @@
 
         <div
             class="bg-white
-                   p-5 sm:p-6
+
+                   p-5
+                   sm:p-6
+
                    rounded-lg
+
                    shadow-md
+
                    text-center
+
                    hover:shadow-xl
+
                    transition"
         >
 
+
             <div
                 class="text-orange-500
+
                        text-4xl
+
                        mb-4"
             >
 
-                <i class="fa-solid fa-people-group"></i>
+                <i
+                    class="fa-solid
+                           fa-people-group"
+                ></i>
 
             </div>
 
 
+
             <h3
-                class="text-xl
+                class="text-lg
+
+                       sm:text-xl
+
                        font-semibold
+
                        mb-2"
             >
 
@@ -435,9 +702,12 @@
             </h3>
 
 
+
             <p
                 class="text-gray-600
-                       text-sm sm:text-base"
+
+                       text-sm
+                       sm:text-base"
             >
 
                 Assign workers and helpers easily.
@@ -454,28 +724,46 @@
 
         <div
             class="bg-white
-                   p-5 sm:p-6
+
+                   p-5
+                   sm:p-6
+
                    rounded-lg
+
                    shadow-md
+
                    text-center
+
                    hover:shadow-xl
+
                    transition"
         >
 
+
             <div
                 class="text-orange-500
+
                        text-4xl
+
                        mb-4"
             >
 
-                <i class="fa-solid fa-chart-line"></i>
+                <i
+                    class="fa-solid
+                           fa-chart-line"
+                ></i>
 
             </div>
 
 
+
             <h3
-                class="text-xl
+                class="text-lg
+
+                       sm:text-xl
+
                        font-semibold
+
                        mb-2"
             >
 
@@ -484,9 +772,12 @@
             </h3>
 
 
+
             <p
                 class="text-gray-600
-                       text-sm sm:text-base"
+
+                       text-sm
+                       sm:text-base"
             >
 
                 Get live updates of ongoing work.
@@ -505,27 +796,50 @@
 
     <div
         class="text-center
-               mt-8 sm:mt-10
+
+               mt-8
+               sm:mt-10
+
                px-5"
     >
 
         <a
             href="{% url 'explore_services' %}"
-            class="inline-block
+
+            class="inline-flex
+
+                   items-center
+                   justify-center
+
                    bg-orange-500
+
                    hover:bg-orange-600
+
                    text-white
+
                    font-semibold
-                   px-6 sm:px-7
+
+                   px-6
+                   sm:px-7
+
                    py-3
+
                    rounded-lg
+
                    transition
-                   text-sm sm:text-base"
+
+                   text-sm
+                   sm:text-base"
         >
 
             Explore All Services
 
-            <i class="fa-solid fa-arrow-right ml-2"></i>
+            <i
+                class="fa-solid
+                       fa-arrow-right
+
+                       ml-2"
+            ></i>
 
         </a>
 
@@ -540,6 +854,7 @@
 <!-- ===================================================== -->
 
 {% include "footer.html" %}
+
 
 
 </body>
