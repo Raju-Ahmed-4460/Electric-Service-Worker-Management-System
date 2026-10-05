@@ -8,6 +8,9 @@ load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+# settings.py - এই লাইনটি যোগ করুন
+
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -77,34 +80,39 @@ WSGI_APPLICATION = "new_eee_management.wsgi.application"
 # }
 
 
-DATABASES = {
-    'default': dj_database_url.config(
-        # Replace this value with your local database's connection string.
-        default='postgresql://buildsync_db_29zt_user:OP5D2TkiZgmYl0uP7qcXZ60QuF0Ut1r8@dpg-da1g021t0dsc73bpmjng-a.oregon-postgres.render.com/buildsync_db_29zt',
-        conn_max_age=600
-    )
-}
-
-
-
 # DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': os.getenv('DB_NAME'),
-#         'USER': os.getenv('DB_USER'),
-#         'PASSWORD': os.getenv('DB_PASSWORD'),
-#         'HOST': os.getenv('DB_HOST'),
-#         'PORT': os.getenv('DB_PORT'),
-#     }
+#     'default': dj_database_url.config(
+#         # Replace this value with your local database's connection string.
+#         default='postgresql://buildsync_db_29zt_user:OP5D2TkiZgmYl0uP7qcXZ60QuF0Ut1r8@dpg-da1g021t0dsc73bpmjng-a.oregon-postgres.render.com/buildsync_db_29zt',
+#         conn_max_age=600
+#     )
 # }
 
 
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
+    }
+}
+
+
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
+
 EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
 EMAIL_HOST_USER = config("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+
 FRONTEND_URL = config("FRONTEND_URL")
 
 
@@ -154,3 +162,4 @@ STATICFILES_DIRS=[
 AUTH_USER_MODEL = "user.User"
 
 LOGIN_URL = "login"
+
