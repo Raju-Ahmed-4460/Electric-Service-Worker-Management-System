@@ -117,71 +117,99 @@ class Userdashboard(View):
     
 
 
-@login_required
-def Managerdashboard(request):
+@method_decorator(login_required, name="dispatch")
+class Managerdashboard(View):
 
-    if not is_manager(request.user):
+    def get(self,request,*args,**kwargs):
 
-        messages.error(
-            request,
-            "Only Manager can access Manager Dashboard."
-        )
+        if not is_manager(request.user):
+        
+                messages.error(
+                    request,
+                    "Only Manager can access Manager Dashboard."
+                )
+        
+                return redirect("home")
+        return render(
+                        request,
+                        "managerdashboard.html"
+                    )
+        
+            
 
-        return redirect("home")
 
-    return render(
-        request,
-        "managerdashboard.html"
-    )
+    
 
 
-@login_required
-def apply_work(request):
+@ method_decorator(login_required,name="dispatch")
+class Apply_work(View):
 
-    if (
-        request.user.is_superuser
-        or is_manager(request.user)
-    ):
+    page ="apply_work.html"
 
-        messages.error(
-            request,
-            "Managers and Superusers cannot apply for worker jobs."
-        )
+    def get(self,request,*args,**kwargs):
+         if (
+                request.user.is_superuser
+                or is_manager(request.user)
+            ):
+        
+                messages.error(
+                    request,
+                    "Managers and Superusers cannot apply for worker jobs."
+                )
+        
+                return redirect("profile")
+         else:
+             form = WorkApplicationForm()
+             
+             return render(
+                     request,
+                     self.page,
+                     {
+                         "form": form
+                     }
+                 )
+             
 
-        return redirect("profile")
 
-    if request.method == "POST":
+        
 
-        form = WorkApplicationForm(request.POST)
+    def post(self,request,*args, **kwargs):
+        if request.method == "POST":
+        
+                form = WorkApplicationForm(request.POST)
+        
+                if form.is_valid():
+        
+                    application = form.save(
+                        commit=False
+                    )
+        
+                    application.user = request.user
+        
+                    application.save()
+        
+                    messages.success(
+                        request,
+                        "Your work application has been submitted successfully."
+                    )
+        
+                    return redirect("profile")
+                else:
+                    return render(
+                                         request,
+                                         self.page,
+                                         {
+                                             "form": form
+                                         }
+                                     )
 
-        if form.is_valid():
 
-            application = form.save(
-                commit=False
-            )
 
-            application.user = request.user
+    
 
-            application.save()
+    
 
-            messages.success(
-                request,
-                "Your work application has been submitted successfully."
-            )
-
-            return redirect("profile")
-
-    else:
-
-        form = WorkApplicationForm()
-
-    return render(
-        request,
-        "apply_work.html",
-        {
-            "form": form
-        }
-    )
+        
 
 
 @login_required

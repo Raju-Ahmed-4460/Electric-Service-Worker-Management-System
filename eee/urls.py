@@ -3,7 +3,7 @@ from django.urls import path
 from eee.views import (
     Userdashboard,
     Managerdashboard,
-    apply_work,
+    Apply_work,
     profile,
     projects,
     activity,
@@ -32,13 +32,13 @@ urlpatterns = [
 
     path(
         "managerdashboard/",
-        Managerdashboard,
+        Managerdashboard.as_view(),
         name="managerdashboard"
     ),
 
     path(
-        "apply-work/",
-        apply_work,
+        "Apply-work/",
+        Apply_work.as_view(),
         name="apply_work"
     ),
 
