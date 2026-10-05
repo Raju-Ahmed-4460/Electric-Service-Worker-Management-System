@@ -20,7 +20,7 @@ urlpatterns = [
 
     path(
         "userdashboard/",
-        Userdashboard,
+        Userdashboard.as_view(),
         name="userdashboard"
     ),
 

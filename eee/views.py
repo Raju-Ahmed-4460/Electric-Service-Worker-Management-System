@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.views.generic import TemplateView,View
 
 from .forms import (
     WorkApplicationForm,
@@ -29,84 +32,89 @@ def is_manager(user):
         ).exists()
     )
 
+class Userdashboard(View):
 
-def Userdashboard(request):
+    def get_user_context(self, request, **kwargs):
 
-    user = request.user
+        user = request.user
 
-    projects = Project.objects.all().order_by(
-        "-created_at"
-    )
-
-    tasks = Task.objects.filter(
-        status="Available"
-    ).select_related(
-        "project"
-    )
-
-    active_tasks = TaskApplication.objects.none()
-    completed_tasks = TaskApplication.objects.none()
-    pending_tasks = TaskApplication.objects.none()
-    user_projects = Project.objects.none()
-    assigned_works = WorkAssignment.objects.none()
-
-    if user.is_authenticated:
-
-        active_tasks = TaskApplication.objects.filter(
-            user=user,
-            status="Accepted",
-            task__status="Assigned"
-        ).select_related(
-            "task",
-            "task__project"
+        projects = Project.objects.all().order_by(
+            "-created_at"
         )
 
-        completed_tasks = TaskApplication.objects.filter(
-            user=user,
-            status="Accepted",
-            task__status="Completed"
+        tasks = Task.objects.filter(
+            status="Available"
         ).select_related(
-            "task",
-            "task__project"
+            "project"
         )
 
-        pending_tasks = TaskApplication.objects.filter(
-            user=user,
-            status="Pending"
-        ).select_related(
-            "task",
-            "task__project"
+        active_tasks = TaskApplication.objects.none()
+        completed_tasks = TaskApplication.objects.none()
+        pending_tasks = TaskApplication.objects.none()
+        user_projects = Project.objects.none()
+        assigned_works = WorkAssignment.objects.none()
+
+        if user.is_authenticated:
+
+            active_tasks = TaskApplication.objects.filter(
+                user=user,
+                status="Accepted",
+                task__status="Assigned"
+            ).select_related(
+                "task",
+                "task__project"
+            )
+
+            completed_tasks = TaskApplication.objects.filter(
+                user=user,
+                status="Accepted",
+                task__status="Completed"
+            ).select_related(
+                "task",
+                "task__project"
+            )
+
+            pending_tasks = TaskApplication.objects.filter(
+                user=user,
+                status="Pending"
+            ).select_related(
+                "task",
+                "task__project"
+            )
+
+            user_projects = Project.objects.filter(
+                tasks__applications__user=user
+            ).distinct()
+
+            assigned_works = WorkAssignment.objects.filter(
+                worker=user
+            ).select_related(
+                "worker",
+                "assigned_by"
+            ).order_by(
+                "-assigned_at"
+            )
+
+        context = {
+            "projects": projects,
+            "tasks": tasks,
+            "active_tasks": active_tasks,
+            "completed_tasks": completed_tasks,
+            "pending_tasks": pending_tasks,
+            "user_projects": user_projects,
+            "assigned_works": assigned_works,
+            "is_logged_in": user.is_authenticated,
+        }
+
+        return render(
+            request,
+            "Userdashborad.html",
+            context
         )
-
-        user_projects = Project.objects.filter(
-            tasks__applications__user=user
-        ).distinct()
-
-        assigned_works = WorkAssignment.objects.filter(
-            worker=user
-        ).select_related(
-            "worker",
-            "assigned_by"
-        ).order_by(
-            "-assigned_at"
-        )
-
-    context = {
-        "projects": projects,
-        "tasks": tasks,
-        "active_tasks": active_tasks,
-        "completed_tasks": completed_tasks,
-        "pending_tasks": pending_tasks,
-        "user_projects": user_projects,
-        "assigned_works": assigned_works,
-        "is_logged_in": user.is_authenticated,
-    }
-
-    return render(
-        request,
-        "Userdashborad.html",
-        context
-    )
+    def get(self,request,*args,**kwargs):
+        return self.get_user_context(request,*args,**kwargs)
+    
+    
 
 
 @login_required

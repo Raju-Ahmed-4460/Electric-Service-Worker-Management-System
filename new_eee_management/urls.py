@@ -4,7 +4,7 @@ from eee.views import Userdashboard
 
 
 urlpatterns = [
-    path("", Userdashboard, name="root"),
+    path("", Userdashboard.as_view(), name="root"),
 
     path("admin/", admin.site.urls),
 
